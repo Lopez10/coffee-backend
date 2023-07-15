@@ -46,4 +46,8 @@ export class Password extends ValueObject<string> {
     }
     return '';
   }
+
+  get value(): string {
+    return this.props.value;
+  }
 }

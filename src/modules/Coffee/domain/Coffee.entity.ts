@@ -8,6 +8,15 @@ export interface coffeeProps {
 }
 
 export class Coffee extends Entity<coffeeProps> {
+  public toPrimitives() {
+    return {
+      id: this._id.value,
+      name: this.props.name,
+      origin: this.props.origin,
+      height: this.props.height,
+      roast: this.props.roast,
+    };
+  }
   constructor(props: coffeeProps, id?: ID) {
     super(props, id);
   }

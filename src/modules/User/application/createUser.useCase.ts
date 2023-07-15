@@ -1,6 +1,6 @@
 import { UseCase } from '@common/useCase.base';
 import { User } from '../domain/User.entity';
-import { UserRepositoryPort } from '../repo/user.repository';
+import { UserRepositoryPort } from '../repository/user.repository.port';
 import { Description, Email, Name, Password } from '@common';
 
 export interface CreateUserDTO {

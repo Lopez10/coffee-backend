@@ -25,8 +25,22 @@ export class User extends Entity<UserProps> {
     super(props, id);
   }
 
+  public toPrimitives() {
+    return {
+      id: this._id.value,
+      name: this.props.name.value,
+      email: this.props.email.value,
+      password: this.props.password.value,
+      description: this.props.description.value,
+      birthDate: this.props.birthDate,
+      coffeeCounter: this.props.coffeeCounter,
+      coffeeExtraction: this.props.coffeeExtraction,
+      coffeeGrinderMachine: this.props.coffeeGrinderMachine,
+      coffeeExtractionMachine: this.props.coffeeExtractionMachine,
+    };
+  }
+
   public static create(props: UserProps, id?: ID): User {
-    // Create domain validations here
     const user = new User(
       {
         ...props,
