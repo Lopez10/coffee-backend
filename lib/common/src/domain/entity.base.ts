@@ -1,10 +1,10 @@
-import {
-  ArgumentInvalidException,
-  ArgumentNotProvidedException,
-  ArgumentOutOfRangeException,
-} from 'lib/exceptions';
 import { Guard } from 'lib/guard';
 import { ID } from './valueObject';
+import {
+  ArgumentNotProvidedException,
+  ArgumentInvalidException,
+  ArgumentOutOfRangeException,
+} from '@common/exceptions';
 
 const isEntity = (v: any): v is Entity<any> => {
   return v instanceof Entity;
