@@ -1,15 +1,14 @@
-import { Mapper } from '@common/domain/mapper.interface';
 import { User } from './domain/User.entity';
 import { UserModel, userSchema } from './repository/user.repository';
 import { Description, Email, ID, Name, Password, extraction } from '@common';
 import { UserDTO } from './dtos/user.DTO';
 
-export class UserMapper implements Mapper<User> {
-  toPersistence(entity: User): UserModel {
+export class UserMapper {
+  static toPersistence(entity: User): UserModel {
     const record: UserModel = entity.toPrimitives();
     return userSchema.parse(record);
   }
-  toDomain(record: UserModel): User {
+  static toDomain(record: UserModel): User {
     return User.create(
       {
         name: new Name(record.name),
@@ -25,7 +24,7 @@ export class UserMapper implements Mapper<User> {
       new ID(record.id),
     );
   }
-  toResponse(entity: User): UserDTO {
+  static toDTO(entity: User): UserDTO {
     return entity.toPrimitives();
   }
 }

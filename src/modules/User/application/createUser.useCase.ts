@@ -2,6 +2,10 @@ import { UseCase } from '@common/useCase.base';
 import { User } from '../domain/User.entity';
 import { UserRepositoryPort } from '../repository/user.repository.port';
 import { Description, Email, Name, Password } from '@common';
+import { left, right } from 'lib/Result';
+import { AppError } from '@common/AppError';
+import { CreateUserErrors } from './createUser.errors';
+import { Either, Result } from '@common/Result';
 
 export interface CreateUserDTO {
   name: string;
@@ -11,7 +15,13 @@ export interface CreateUserDTO {
   birthDate: number;
 }
 
-type Response = void;
+type Response = Either<
+  | CreateUserErrors.EmailAlreadyExistsError
+  | CreateUserErrors.UsernameTakenError
+  | AppError.UnexpectedError
+  | Result<any>,
+  Result<void>
+>;
 
 export class CreateUserUseCase
   implements UseCase<CreateUserDTO, Promise<Response>>
@@ -31,8 +41,22 @@ export class CreateUserUseCase
       description,
       birthDate: request.birthDate,
     };
-
     const user = User.create(userValues);
-    await this.userRepository.insert(user);
+
+    try {
+      const userAlreadyExists = await this.userRepository.findOneByEmail(
+        email.value,
+      );
+      if (userAlreadyExists) {
+        return left(
+          new CreateUserErrors.EmailAlreadyExistsError(email.value),
+        ) as Response;
+      }
+
+      await this.userRepository.insert(user);
+      return right(Result.ok<void>());
+    } catch (error) {
+      return left(new AppError.UnexpectedError(error)) as Response;
+    }
   }
 }
