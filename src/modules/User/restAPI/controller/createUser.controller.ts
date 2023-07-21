@@ -1,12 +1,19 @@
 import { BaseController } from '@common/application/BaseController';
-import { CreateUserDTO, CreateUserUseCase } from './createUser.useCase';
+import {
+  CreateUserDTO,
+  CreateUserUseCase,
+} from '../../application/createUser.useCase';
 import { Request, Response } from 'express';
+import { UserRepositoryPort } from '../../repository/user.repository.port';
+import { PostgresUserRepository } from '../../infrastructure/postgresUser.repository';
 
 export class CreateUserController extends BaseController {
   private useCase: CreateUserUseCase;
-  constructor(useCase: CreateUserUseCase) {
+  private userRepository: UserRepositoryPort;
+  constructor() {
     super();
-    this.useCase = useCase;
+    this.userRepository = new PostgresUserRepository();
+    this.useCase = new CreateUserUseCase(this.userRepository);
   }
 
   async runImplementation(
