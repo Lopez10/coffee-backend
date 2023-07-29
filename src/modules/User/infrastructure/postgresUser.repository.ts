@@ -4,6 +4,16 @@ import { User } from '../domain/User.entity';
 import { UserRepositoryPort } from '../repository/user.repository.port';
 
 export class PostgresUserRepository implements UserRepositoryPort {
+  // private userRepoPromise: Promise<Repository<UserTypeORM>>;
+
+  constructor() {
+    // this.userRepoPromise = this.getUserRepo();
+  }
+
+  // private async getUserRepo(): Promise<Repository<UserTypeORM>> {
+  //   const connection =
+  // }
+
   async insert(entity: User | User[]): Promise<void> {
     // implementation goes here
   }
