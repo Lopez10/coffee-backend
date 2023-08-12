@@ -1,31 +1,32 @@
 import { PaginatedQueryParams, Paginated } from '@common';
-import { Option } from 'oxide.ts';
+import { PrismaClient, User as UserModel } from '@prisma/client';
 import { User } from '../domain/User.entity';
 import { UserRepositoryPort } from '../repository/user.repository.port';
+import { UserMapper } from '../user.mapper';
 
 export class PostgresUserRepository implements UserRepositoryPort {
-  // private userRepoPromise: Promise<Repository<UserTypeORM>>;
-
+  private prisma: PrismaClient;
   constructor() {
-    // this.userRepoPromise = this.getUserRepo();
+    this.prisma = new PrismaClient();
   }
-
-  // private async getUserRepo(): Promise<Repository<UserTypeORM>> {
-  //   const connection =
-  // }
 
   async insert(entity: User | User[]): Promise<void> {
     // implementation goes here
   }
 
-  async findOneById(id: string): Promise<Option<User>> {
-    // implementation goes here
-    return;
+  async findOneById(id: string): Promise<User | null> {
+    const user: UserModel = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    if (!user) return null;
+    const userDomain = UserMapper.toDomain(user);
+    return userDomain;
   }
 
   async findAll(): Promise<User[]> {
-    // implementation goes here
-    return;
+    const users: UserModel[] = await this.prisma.user.findMany();
+    const usersDomain = users.map((user) => UserMapper.toDomain(user));
+    return usersDomain;
   }
 
   async findAllPaginated(
@@ -46,7 +47,11 @@ export class PostgresUserRepository implements UserRepositoryPort {
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
-    // implementation goes here
-    return null;
+    const user: UserModel = await this.prisma.user.findUnique({
+      where: { email },
+    });
+    if (!user) return null;
+    const userDomain = UserMapper.toDomain(user);
+    return userDomain;
   }
 }

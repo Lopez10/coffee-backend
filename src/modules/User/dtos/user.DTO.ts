@@ -6,7 +6,7 @@ export interface UserDTO {
   email: string;
   password: string;
   description: string;
-  birthDate: number;
+  birthDate: Date;
   coffeeCounter: number;
   coffeeExtraction: extraction;
   coffeeGrinderMachine: string;

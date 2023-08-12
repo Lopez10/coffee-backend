@@ -1,5 +1,3 @@
-import { Option } from 'oxide.ts';
-
 export class Paginated<T> {
   readonly count: number;
   readonly limit: number;
@@ -25,7 +23,7 @@ export type PaginatedQueryParams = {
 
 export interface RepositoryPort<Entity> {
   insert(entity: Entity | Entity[]): Promise<void>;
-  findOneById(id: string): Promise<Option<Entity>>;
+  findOneById(id: string): Promise<Entity | null>;
   findAll(): Promise<Entity[]>;
   findAllPaginated(params: PaginatedQueryParams): Promise<Paginated<Entity>>;
   delete(entity: Entity): Promise<boolean>;

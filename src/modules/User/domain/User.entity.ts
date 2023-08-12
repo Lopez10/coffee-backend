@@ -13,7 +13,7 @@ export interface UserProps {
   password: Password;
   name: Name;
   description: Description;
-  birthDate: number;
+  birthDate: Date;
   coffeeCounter?: number;
   coffeeExtraction?: extraction;
   coffeeGrinderMachine?: string;
