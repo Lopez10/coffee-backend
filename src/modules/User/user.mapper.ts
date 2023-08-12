@@ -1,7 +1,19 @@
 import { User } from './domain/User.entity';
 import { User as UserModel } from '@prisma/client';
 import { Description, Email, ID, Name, Password, extraction } from '@common';
-import { UserDTO } from './dtos/user.DTO';
+
+export interface UserDTO {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  description: string;
+  birthDate: Date;
+  coffeeCounter: number;
+  coffeeExtraction: extraction;
+  coffeeGrinderMachine: string;
+  coffeeExtractionMachine: string;
+}
 
 export class UserMapper {
   static toDomain(user: UserModel): User {

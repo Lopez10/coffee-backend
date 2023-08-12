@@ -1,11 +1,11 @@
 import { BaseController } from '@common/application/BaseController';
+import { Request, Response } from 'express';
+import { UserRepositoryPort } from '../../../domain/user.repository.port';
+import { PostgresUserRepository } from '../../repository/postgresUser.repository';
 import {
   CreateUserDTO,
   CreateUserUseCase,
-} from '../../application/createUser.useCase';
-import { Request, Response } from 'express';
-import { UserRepositoryPort } from '../../repository/user.repository.port';
-import { PostgresUserRepository } from '../../infrastructure/postgresUser.repository';
+} from 'src/modules/User/application/CreateUser/createUser.useCase';
 
 export class CreateUserController extends BaseController {
   private useCase: CreateUserUseCase;

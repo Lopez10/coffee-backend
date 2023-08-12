@@ -1,8 +1,8 @@
 import { PaginatedQueryParams, Paginated } from '@common';
 import { PrismaClient, User as UserModel } from '@prisma/client';
-import { User } from '../domain/User.entity';
-import { UserRepositoryPort } from '../repository/user.repository.port';
-import { UserMapper } from '../user.mapper';
+import { User } from '../../domain/User.entity';
+import { UserRepositoryPort } from '../../domain/user.repository.port';
+import { UserMapper } from '../../user.mapper';
 
 export class PostgresUserRepository implements UserRepositoryPort {
   private prisma: PrismaClient;

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { userRouter } from './modules/User/restAPI/route/createUser.routes';
+import { userRouter } from './modules/User/infrastructure/restAPI/route/createUser.routes';
 
 const router = Router();
 
