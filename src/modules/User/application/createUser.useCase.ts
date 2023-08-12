@@ -12,7 +12,7 @@ export interface CreateUserDTO {
   email: string;
   password: string;
   description: string;
-  birthDate: number;
+  birthDate: Date;
 }
 
 type Response = Either<
@@ -30,15 +30,12 @@ export class CreateUserUseCase
 
   async run(request: CreateUserDTO): Promise<Response> {
     const email = new Email(request.email);
-    const password = new Password(request.password);
-    const name = new Name(request.name);
-    const description = new Description(request.description);
 
     const userValues = {
       email,
-      password,
-      name,
-      description,
+      password: new Password(request.password),
+      name: new Name(request.name),
+      description: new Description(request.description),
       birthDate: request.birthDate,
     };
     const user = User.create(userValues);
