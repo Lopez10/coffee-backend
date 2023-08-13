@@ -10,8 +10,14 @@ export class PostgresUserRepository implements UserRepositoryPort {
     this.prisma = new PrismaClient();
   }
 
-  async insert(entity: User | User[]): Promise<void> {
-    // implementation goes here
+  async insert(entity: User): Promise<void> {
+    const user: UserModel = UserMapper.toDTO(entity);
+    await this.prisma.user.create({ data: user });
+  }
+
+  async insertSome(entity: User[]): Promise<void> {
+    const users: UserModel[] = entity.map((user) => UserMapper.toDTO(user));
+    await this.prisma.user.createMany({ data: users });
   }
 
   async findOneById(id: string): Promise<User | null> {
@@ -32,18 +38,36 @@ export class PostgresUserRepository implements UserRepositoryPort {
   async findAllPaginated(
     params: PaginatedQueryParams,
   ): Promise<Paginated<User>> {
-    // implementation goes here
-    return;
+    const { limit, offset, orderBy } = params;
+    const users: UserModel[] = await this.prisma.user.findMany({
+      take: limit,
+      skip: offset,
+      orderBy: {
+        [orderBy.field]: orderBy.param,
+      },
+    });
+    const usersDomain = users.map((user) => UserMapper.toDomain(user));
+    return new Paginated({
+      count: users.length,
+      limit,
+      page: offset / limit,
+      data: usersDomain,
+    });
   }
 
   async delete(entity: User): Promise<boolean> {
-    // implementation goes here
-    return;
+    const user: UserModel = UserMapper.toDTO(entity);
+    const userDeleted = await this.prisma.user.delete({
+      where: { id: user.id },
+    });
+
+    if (!userDeleted) return false;
+
+    return true;
   }
 
   async transaction<T>(handler: () => Promise<T>): Promise<T> {
-    // implementation goes here
-    return;
+    return this.prisma.$transaction(handler);
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
