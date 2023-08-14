@@ -8,6 +8,10 @@ export interface coffeeProps {
 }
 
 export class Coffee extends Entity<coffeeProps> {
+  private constructor(props: coffeeProps, id?: ID) {
+    super(props, id);
+  }
+
   public toPrimitives() {
     return {
       id: this._id.value,
@@ -17,7 +21,14 @@ export class Coffee extends Entity<coffeeProps> {
       roast: this.props.roast,
     };
   }
-  constructor(props: coffeeProps, id?: ID) {
-    super(props, id);
+
+  public static create(props: coffeeProps, id?: ID): Coffee {
+    const coffee = new Coffee(
+      {
+        ...props,
+      },
+      id,
+    );
+    return coffee;
   }
 }
