@@ -1,7 +1,7 @@
 import { BaseController } from '@common/application/BaseController';
 import { Request, Response } from 'express';
 import { UserRepositoryPort } from '../../../domain/user.repository.port';
-import { PostgresUserRepository } from '../../repository/postgresUser.repository';
+import { UserPostgresRepository } from '../../repository/user.postgres.repository';
 import {
   CreateUserDTO,
   CreateUserUseCase,
@@ -12,7 +12,7 @@ export class CreateUserController extends BaseController {
   private userRepository: UserRepositoryPort;
   constructor() {
     super();
-    this.userRepository = new PostgresUserRepository();
+    this.userRepository = new UserPostgresRepository();
     this.useCase = new CreateUserUseCase(this.userRepository);
   }
 

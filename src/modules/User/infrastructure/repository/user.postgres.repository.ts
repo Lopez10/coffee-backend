@@ -4,7 +4,7 @@ import { User } from '../../domain/User.entity';
 import { UserRepositoryPort } from '../../domain/user.repository.port';
 import { UserMapper } from '../../user.mapper';
 
-export class PostgresUserRepository implements UserRepositoryPort {
+export class UserPostgresRepository implements UserRepositoryPort {
   private prisma: PrismaClient;
   constructor() {
     this.prisma = new PrismaClient();

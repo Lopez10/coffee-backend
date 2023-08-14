@@ -1,10 +1,11 @@
-import { Entity, ID, roast } from '@common';
+import { Entity, ID, Name, roast } from '@common';
 
 export interface coffeeProps {
-  name: string;
+  name: Name;
   origin: string;
   height: number;
   roast: roast;
+  userId: ID;
 }
 
 export class Coffee extends Entity<coffeeProps> {
@@ -15,10 +16,11 @@ export class Coffee extends Entity<coffeeProps> {
   public toPrimitives() {
     return {
       id: this._id.value,
-      name: this.props.name,
+      name: this.props.name.value,
       origin: this.props.origin,
       height: this.props.height,
       roast: this.props.roast,
+      userId: this.props.userId.value,
     };
   }
 

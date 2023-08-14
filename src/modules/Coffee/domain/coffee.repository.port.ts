@@ -1,6 +1,6 @@
 import { RepositoryPort } from '@common';
-import { Coffee } from '@prisma/client';
+import { Coffee } from './Coffee.entity';
 
 export interface CoffeeRepositoryPort extends RepositoryPort<Coffee> {
-  findOneByName(name: string): Promise<Coffee | null>;
+  findByName(name: string): Promise<Coffee[]>;
 }

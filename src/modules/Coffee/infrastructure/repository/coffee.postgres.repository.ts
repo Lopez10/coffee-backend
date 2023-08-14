@@ -1,0 +1,86 @@
+import { PaginatedQueryParams, Paginated } from '@common';
+import { CoffeeRepositoryPort } from '../../domain/coffee.repository.port';
+import { PrismaClient, Coffee as CoffeeModel } from '@prisma/client';
+import { Coffee } from '../../domain/Coffee.entity';
+import { CoffeeMapper } from '../../coffee.mapper';
+
+export class CoffeePostgresRepository implements CoffeeRepositoryPort {
+  private prisma: PrismaClient;
+  constructor() {
+    this.prisma = new PrismaClient();
+  }
+
+  async findByName(name: string): Promise<Coffee[]> {
+    const coffees = await this.prisma.coffee.findMany({
+      where: { name },
+    });
+    const coffeesDomain = coffees.map((coffee) =>
+      CoffeeMapper.toDomain(coffee),
+    );
+
+    return coffeesDomain;
+  }
+
+  async insert(entity: Coffee): Promise<void> {
+    const coffee: CoffeeModel = CoffeeMapper.toDTO(entity);
+    await this.prisma.coffee.create({ data: coffee });
+  }
+
+  async insertSome(entity: Coffee[]): Promise<void> {
+    const coffees: CoffeeModel[] = entity.map((coffee) =>
+      CoffeeMapper.toDTO(coffee),
+    );
+    await this.prisma.coffee.createMany({ data: coffees });
+  }
+
+  async findOneById(id: string): Promise<Coffee> {
+    const coffee: CoffeeModel = await this.prisma.coffee.findUnique({
+      where: { id },
+    });
+    const coffeeDomain = CoffeeMapper.toDomain(coffee);
+    return coffeeDomain;
+  }
+
+  async findAll(): Promise<Coffee[]> {
+    const coffees: CoffeeModel[] = await this.prisma.coffee.findMany();
+    const coffeesDomain = coffees.map((coffee) =>
+      CoffeeMapper.toDomain(coffee),
+    );
+    return coffeesDomain;
+  }
+
+  async findAllPaginated(
+    params: PaginatedQueryParams,
+  ): Promise<Paginated<Coffee>> {
+    const { limit, offset, orderBy } = params;
+    const coffees: CoffeeModel[] = await this.prisma.coffee.findMany({
+      take: limit,
+      skip: offset,
+      orderBy: {
+        [orderBy.field]: orderBy.param,
+      },
+    });
+    const coffeesDomain = coffees.map((coffee) =>
+      CoffeeMapper.toDomain(coffee),
+    );
+    return new Paginated({
+      count: coffees.length,
+      limit,
+      page: offset / limit,
+      data: coffeesDomain,
+    });
+  }
+
+  async delete(entity: Coffee): Promise<boolean> {
+    const coffee: CoffeeModel = CoffeeMapper.toDTO(entity);
+    const coffeeDeleted = await this.prisma.coffee.delete({
+      where: { id: coffee.id },
+    });
+
+    if (!coffeeDeleted) return false;
+  }
+
+  async transaction<T>(handler: () => Promise<T>): Promise<T> {
+    return this.prisma.$transaction(handler);
+  }
+}
