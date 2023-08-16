@@ -83,4 +83,15 @@ export class CoffeePostgresRepository implements CoffeeRepositoryPort {
   async transaction<T>(handler: () => Promise<T>): Promise<T> {
     return this.prisma.$transaction(handler);
   }
+
+  async findByCriteria(criteria: any): Promise<Coffee[]> {
+    const coffees = await this.prisma.coffee.findMany({
+      where: criteria,
+    });
+    const coffeesDomain = coffees.map((coffee) =>
+      CoffeeMapper.toDomain(coffee),
+    );
+
+    return coffeesDomain;
+  }
 }

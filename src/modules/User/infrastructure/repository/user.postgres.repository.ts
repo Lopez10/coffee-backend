@@ -55,6 +55,14 @@ export class UserPostgresRepository implements UserRepositoryPort {
     });
   }
 
+  async findByCriteria(criteria: any): Promise<User[]> {
+    const users: UserModel[] = await this.prisma.user.findMany({
+      where: criteria,
+    });
+    const usersDomain = users.map((user) => UserMapper.toDomain(user));
+    return usersDomain;
+  }
+
   async delete(entity: User): Promise<boolean> {
     const user: UserModel = UserMapper.toDTO(entity);
     const userDeleted = await this.prisma.user.delete({
