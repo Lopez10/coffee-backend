@@ -5,7 +5,7 @@ import { UserPostgresRepository } from '../../repository/user.postgres.repositor
 import {
   CreateUserDTO,
   CreateUserUseCase,
-} from 'src/modules/User/application/CreateUser/createUser.useCase';
+} from 'src/modules/User/application/useCase/CreateUser/createUser.useCase';
 
 export class CreateUserController extends BaseController {
   private useCase: CreateUserUseCase;

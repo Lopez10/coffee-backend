@@ -4,8 +4,8 @@ import { left, right } from 'lib/Result';
 import { AppError } from '@common/AppError';
 import { CreateUserErrors } from './createUser.errors';
 import { Either, Result } from '@common/Result';
-import { UserRepositoryPort } from '../../domain/user.repository.port';
-import { User } from '../../domain/User.entity';
+import { UserRepositoryPort } from '../../../domain/user.repository.port';
+import { User } from '../../../domain/User.entity';
 
 export interface CreateUserDTO {
   name: string;
