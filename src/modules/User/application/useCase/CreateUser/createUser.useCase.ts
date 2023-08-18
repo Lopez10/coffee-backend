@@ -1,9 +1,16 @@
-import { UseCase } from '@common/useCase.base';
-import { Description, Email, Name, Password } from '@common';
-import { left, right } from 'lib/Result';
-import { AppError } from '@common/AppError';
+import {
+  Description,
+  Email,
+  Name,
+  Password,
+  UseCase,
+  AppError,
+  Either,
+  Result,
+  left,
+  right,
+} from '@common';
 import { CreateUserErrors } from './createUser.errors';
-import { Either, Result } from '@common/Result';
 import { UserRepositoryPort } from '../../../domain/user.repository.port';
 import { User } from '../../../domain/User.entity';
 
@@ -18,8 +25,7 @@ export interface CreateUserDTO {
 type Response = Either<
   | CreateUserErrors.EmailAlreadyExistsError
   | CreateUserErrors.UsernameTakenError
-  | AppError.UnexpectedError
-  | Result<any>,
+  | AppError.UnexpectedError,
   Result<void>
 >;
 
@@ -45,15 +51,13 @@ export class CreateUserUseCase
         email.value,
       );
       if (userAlreadyExists) {
-        return left(
-          new CreateUserErrors.EmailAlreadyExistsError(email.value),
-        ) as Response;
+        return left(new CreateUserErrors.EmailAlreadyExistsError(email.value));
       }
 
       await this.userRepository.insert(user);
       return right(Result.ok<void>());
     } catch (error) {
-      return left(new AppError.UnexpectedError(error)) as Response;
+      return left(new AppError.UnexpectedError(error));
     }
   }
 }
