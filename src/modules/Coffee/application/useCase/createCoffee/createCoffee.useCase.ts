@@ -9,25 +9,16 @@ import {
   right,
   roast,
 } from '@common';
+import { CoffeeDTO } from 'src/modules/Coffee/coffee.mapper';
 import { Coffee } from 'src/modules/Coffee/domain/Coffee.entity';
 import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/coffee.repository.port';
 
-export interface CreateCoffeeDTO {
-  name: string;
-  origin: string;
-  height: number;
-  roast: string;
-  userId: string;
-}
-
 type Response = Either<AppError.UnexpectedError, Result<void>>;
 
-export class CreateCoffee
-  implements UseCase<CreateCoffeeDTO, Promise<Response>>
-{
+export class CreateCoffee implements UseCase<CoffeeDTO, Promise<Response>> {
   constructor(private readonly coffeeRepository: CoffeeRepositoryPort) {}
 
-  async run(request: CreateCoffeeDTO): Promise<Response> {
+  async run(request: CoffeeDTO): Promise<Response> {
     const coffeeDomain = Coffee.create({
       name: new Name(request.name),
       origin: request.origin,
