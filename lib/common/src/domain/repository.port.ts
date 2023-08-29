@@ -27,7 +27,7 @@ export interface RepositoryPort<Entity> {
   findOneById(id: string): Promise<Entity | null>;
   findAll(): Promise<Entity[]>;
   findAllPaginated(params: PaginatedQueryParams): Promise<Paginated<Entity>>;
-  delete(entity: Entity): Promise<boolean>;
+  delete(id: string): Promise<boolean>;
   findByCriteria(criteria: any): Promise<Entity[]>;
   transaction<T>(handler: () => Promise<T>): Promise<T>;
 }

@@ -13,14 +13,7 @@ import {
 import { CreateUserErrors } from './createUser.errors';
 import { UserRepositoryPort } from '../../../domain/user.repository.port';
 import { User } from '../../../domain/User.entity';
-
-export interface CreateUserDTO {
-  name: string;
-  email: string;
-  password: string;
-  description: string;
-  birthDate: Date;
-}
+import { UserDTO } from 'src/modules/User/user.mapper';
 
 type Response = Either<
   | CreateUserErrors.EmailAlreadyExistsError
@@ -29,12 +22,10 @@ type Response = Either<
   Result<void>
 >;
 
-export class CreateUserUseCase
-  implements UseCase<CreateUserDTO, Promise<Response>>
-{
+export class CreateUserUseCase implements UseCase<UserDTO, Promise<Response>> {
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
-  async run(request: CreateUserDTO): Promise<Response> {
+  async run(request: UserDTO): Promise<Response> {
     const email = new Email(request.email);
 
     const userValues = {

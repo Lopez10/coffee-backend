@@ -9,10 +9,10 @@ export interface UserDTO {
   password: string;
   description: string;
   birthDate: Date;
-  coffeeCounter: number;
-  coffeeExtraction: extraction;
-  coffeeGrinderMachine: string;
-  coffeeExtractionMachine: string;
+  coffeeCounter: number | null;
+  coffeeExtraction: extraction | null;
+  coffeeGrinderMachine: string | null;
+  coffeeExtractionMachine: string | null;
 }
 
 export class UserMapper {
