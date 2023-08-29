@@ -71,10 +71,9 @@ export class CoffeePostgresRepository implements CoffeeRepositoryPort {
     });
   }
 
-  async delete(entity: Coffee): Promise<boolean> {
-    const coffee: CoffeeModel = CoffeeMapper.toDTO(entity);
+  async delete(id: string): Promise<boolean> {
     const coffeeDeleted = await this.prisma.coffee.delete({
-      where: { id: coffee.id },
+      where: { id },
     });
 
     if (!coffeeDeleted) return false;

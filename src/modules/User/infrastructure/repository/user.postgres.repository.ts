@@ -63,10 +63,9 @@ export class UserPostgresRepository implements UserRepositoryPort {
     return usersDomain;
   }
 
-  async delete(entity: User): Promise<boolean> {
-    const user: UserModel = UserMapper.toDTO(entity);
+  async delete(id: string): Promise<boolean> {
     const userDeleted = await this.prisma.user.delete({
-      where: { id: user.id },
+      where: { id },
     });
 
     if (!userDeleted) return false;

@@ -2,10 +2,8 @@ import { BaseController } from '@common/application/BaseController';
 import { Request, Response } from 'express';
 import { UserRepositoryPort } from '../../../domain/user.repository.port';
 import { UserPostgresRepository } from '../../repository/user.postgres.repository';
-import {
-  CreateUserDTO,
-  CreateUserUseCase,
-} from 'src/modules/User/application/useCase/createUser/createUser.useCase';
+import { CreateUserUseCase } from 'src/modules/User/application/useCase/createUser/createUser.useCase';
+import { UserDTO } from 'src/modules/User/user.mapper';
 
 export class CreateUserController extends BaseController {
   private useCase: CreateUserUseCase;
@@ -20,15 +18,8 @@ export class CreateUserController extends BaseController {
     req: Request,
     res: Response<any, Record<string, any>>,
   ): Promise<any> {
-    let dto: CreateUserDTO = req.body as CreateUserDTO;
+    const dto: UserDTO = req.body;
 
-    dto = {
-      email: dto.email,
-      password: dto.password,
-      name: dto.name,
-      birthDate: dto.birthDate,
-      description: dto.description,
-    };
     try {
       const result = await this.useCase.run(dto);
 
