@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "resolveJsonModule": true,
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -25,5 +26,10 @@
         "./lib/common/src/*"
       ],
     },
+  },
+  "ts-node": {
+    "moduleTypes": {
+      "jest.config.ts": "commonjs"
+    }
   }
 }
