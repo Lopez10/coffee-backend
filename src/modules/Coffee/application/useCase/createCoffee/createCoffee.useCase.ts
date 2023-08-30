@@ -9,9 +9,9 @@ import {
   right,
   roast,
 } from '@common';
-import { CoffeeDTO } from 'src/modules/Coffee/coffee.mapper';
+import { CoffeeDTO } from 'src/modules/Coffee/Coffee.mapper';
 import { Coffee } from 'src/modules/Coffee/domain/Coffee.entity';
-import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/coffee.repository.port';
+import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/Coffee.repository.port';
 
 type Response = Either<AppError.UnexpectedError, Result<void>>;
 

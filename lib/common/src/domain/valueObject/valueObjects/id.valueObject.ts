@@ -1,4 +1,3 @@
-import { isUUID } from 'class-validator';
 import { v4 } from 'uuid';
 import { DomainPrimitive, ValueObject } from '../valueObject.base';
 
@@ -12,7 +11,7 @@ export class ID extends ValueObject<string> {
   }
 
   protected validate({ value: id }: DomainPrimitive<string>): void {
-    if (!isUUID(id)) {
+    if (id === undefined || id === null || id === '') {
       throw new Error(`Incorrect ID format "${id}"`);
     }
   }

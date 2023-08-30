@@ -10,8 +10,8 @@ import {
   left,
   right,
 } from '@common';
-import { CreateUserErrors } from './createUser.errors';
-import { UserRepositoryPort } from '../../../domain/user.repository.port';
+import { CreateUserErrors } from './CreateUser.errors';
+import { UserRepositoryPort } from '../../../domain/User.repository.port';
 import { User } from '../../../domain/User.entity';
 import { UserDTO } from 'src/modules/User/user.mapper';
 

@@ -1,5 +1,5 @@
 import { AppError, Either, UseCase, left, right } from '@common';
-import { UserRepositoryPort } from 'src/modules/User/domain/user.repository.port';
+import { UserRepositoryPort } from 'src/modules/User/domain/User.repository.port';
 
 type Response = Either<AppError.UnexpectedError, boolean>;
 

@@ -1,6 +1,6 @@
 import { AppError, Either, Result, UseCase, left, right } from '@common';
 import { Coffee } from 'src/modules/Coffee/domain/Coffee.entity';
-import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/coffee.repository.port';
+import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/Coffee.repository.port';
 
 export interface RetrieveCoffeesDTO {
   name?: string;
@@ -12,22 +12,14 @@ export interface RetrieveCoffeesDTO {
 
 type Response = Either<AppError.UnexpectedError, Result<Coffee[]>>;
 
-export class RetrieveCoffeeUseCase
+export class RetrieveCoffeesUseCase
   implements UseCase<RetrieveCoffeesDTO, Promise<Response>>
 {
   constructor(private readonly coffeeRepository: CoffeeRepositoryPort) {}
 
   async run(request?: RetrieveCoffeesDTO): Promise<Response> {
-    const coffeeValues = {
-      name: request?.name,
-      origin: request?.origin,
-      height: request?.height,
-      roast: request?.roast,
-      userId: request?.userId,
-    };
-
     try {
-      const coffee = await this.coffeeRepository.findByCriteria(coffeeValues);
+      const coffee = await this.coffeeRepository.findByCriteria(request);
       return right(Result.ok<Coffee[]>(coffee));
     } catch (error) {
       return left(new AppError.UnexpectedError(error));

@@ -1,8 +1,8 @@
 import { PaginatedQueryParams, Paginated } from '@common';
-import { CoffeeRepositoryPort } from '../../domain/coffee.repository.port';
+import { CoffeeRepositoryPort } from '../../domain/Coffee.repository.port';
 import { PrismaClient, Coffee as CoffeeModel } from '@prisma/client';
 import { Coffee } from '../../domain/Coffee.entity';
-import { CoffeeMapper } from '../../coffee.mapper';
+import { CoffeeMapper } from '../../Coffee.mapper';
 
 export class CoffeePostgresRepository implements CoffeeRepositoryPort {
   private prisma: PrismaClient;
