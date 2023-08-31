@@ -30,7 +30,6 @@ export class MockCoffeeRepository implements CoffeeRepositoryPort {
   }
 
   async findByCriteria(criteria: any): Promise<Coffee[]> {
-    console.log(criteria);
     const coffees = this.coffees.filter((coffee) => {
       let isValid = true;
       const coffeeProps = coffee.toPrimitives();
