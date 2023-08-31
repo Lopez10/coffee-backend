@@ -33,7 +33,7 @@ export class CreateUserUseCase implements UseCase<UserDTO, Promise<Response>> {
       password: new Password(request.password),
       name: new Name(request.name),
       description: new Description(request.description),
-      birthDate: request.birthDate,
+      accessToken: null,
     };
     const user = User.create(userValues);
 

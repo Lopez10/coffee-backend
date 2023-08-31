@@ -7,13 +7,14 @@ import {
   Password,
   extraction,
 } from '@common';
+import { JWTToken } from '@common/auth/jwt';
 
 export interface UserProps {
   email: Email;
   password: Password;
   name: Name;
   description: Description;
-  birthDate: Date;
+  accessToken: JWTToken;
   coffeeCounter?: number;
   coffeeExtraction?: extraction;
   coffeeGrinderMachine?: string;
@@ -32,7 +33,7 @@ export class User extends Entity<UserProps> {
       email: this.props.email.value,
       password: this.props.password.value,
       description: this.props.description.value,
-      birthDate: this.props.birthDate,
+      accessToken: this.props.accessToken,
       coffeeCounter: this.props.coffeeCounter,
       coffeeExtraction: this.props.coffeeExtraction,
       coffeeGrinderMachine: this.props.coffeeGrinderMachine,

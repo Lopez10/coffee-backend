@@ -13,7 +13,6 @@ model User {
   password                String
   name                    String
   description             String
-  birthDate               DateTime
   coffeeCounter           Int?
   coffeeExtraction        String?
   coffeeGrinderMachine    String?
