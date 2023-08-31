@@ -7,14 +7,15 @@ import {
   Password,
   extraction,
 } from '@common';
-import { JWTToken } from '@common/auth/jwt';
+import { JWTToken, RefreshToken } from '@common/auth/jwt';
 
 export interface UserProps {
   email: Email;
   password: Password;
   name: Name;
   description: Description;
-  accessToken: JWTToken;
+  accessToken?: JWTToken;
+  refreshToken?: RefreshToken;
   coffeeCounter?: number;
   coffeeExtraction?: extraction;
   coffeeGrinderMachine?: string;
@@ -22,6 +23,11 @@ export interface UserProps {
 }
 
 export class User extends Entity<UserProps> {
+  setAccessToken(token: JWTToken, refreshToken: RefreshToken): void {
+    this.props.accessToken = token;
+    this.props.refreshToken = refreshToken;
+  }
+
   private constructor(props: UserProps, id?: ID) {
     super(props, id);
   }
@@ -34,6 +40,7 @@ export class User extends Entity<UserProps> {
       password: this.props.password.value,
       description: this.props.description.value,
       accessToken: this.props.accessToken,
+      refreshToken: this.props.accessToken,
       coffeeCounter: this.props.coffeeCounter,
       coffeeExtraction: this.props.coffeeExtraction,
       coffeeGrinderMachine: this.props.coffeeGrinderMachine,

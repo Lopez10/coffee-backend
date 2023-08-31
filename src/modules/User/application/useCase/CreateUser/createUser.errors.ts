@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-namespace */
-
 import { Result } from '@common/Result';
 import { UseCaseError } from '@common/UseCaseError';
 

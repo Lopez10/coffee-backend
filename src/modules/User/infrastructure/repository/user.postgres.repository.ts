@@ -1,4 +1,4 @@
-import { PaginatedQueryParams, Paginated } from '@common';
+import { PaginatedQueryParams, Paginated, Email } from '@common';
 import { PrismaClient, User as UserModel } from '@prisma/client';
 import { User } from '../../domain/User.entity';
 import { UserRepositoryPort } from '../../domain/User.repository.port';
@@ -71,9 +71,9 @@ export class UserPostgresRepository implements UserRepositoryPort {
     return this.prisma.$transaction(handler);
   }
 
-  async findOneByEmail(email: string): Promise<User | null> {
+  async findOneByEmail(email: Email): Promise<User | null> {
     const user: UserModel = await this.prisma.user.findUnique({
-      where: { email },
+      where: { email: email.value },
     });
     if (!user) return null;
     const userDomain = UserMapper.toDomain(user);

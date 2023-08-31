@@ -1,6 +1,6 @@
-import { RepositoryPort } from '@common';
+import { Email, RepositoryPort } from '@common';
 import { User } from './User.entity';
 
 export interface UserRepositoryPort extends RepositoryPort<User> {
-  findOneByEmail(email: string): Promise<User | null>;
+  findOneByEmail(email: Email): Promise<User | null>;
 }
