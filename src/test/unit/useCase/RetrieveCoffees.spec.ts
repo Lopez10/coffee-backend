@@ -20,9 +20,10 @@ describe('Retrieve Coffees', () => {
 
     expect(coffees.isRight()).toEqual(true);
     if (coffees.isRight()) {
-      expect(coffees.value.getValue().length).toEqual(1);
-      expect(coffees.value.getValue()[0]).toBeInstanceOf(Coffee);
-      expect(coffees.value.getValue()[0].toPrimitives().name).toEqual('Café 1');
+      expect(coffees.value.getValue().count).toEqual(1);
+      expect(coffees.value.getValue().data[0].toPrimitives().name).toEqual(
+        'Café 1',
+      );
     }
   });
 
@@ -35,28 +36,31 @@ describe('Retrieve Coffees', () => {
 
     expect(coffees.isRight()).toEqual(true);
     if (coffees.isRight()) {
-      expect(coffees.value.getValue().length).toEqual(3);
+      expect(coffees.value.getValue().count).toEqual(3);
     }
   });
-});
 
-it(`
+  it(`
     GIVEN I have 3 coffees 
     WHEN I retrieve all the coffees from Perú with the name 'Café 3'
     THEN I get all the coffees from Perú with the name 'Café 3'
   `, async () => {
-  const coffees = await action.run({
-    origin: 'Peru',
-    name: 'Café 3',
-  });
+    const coffees = await action.run({
+      origin: 'Peru',
+      name: 'Café 3',
+    });
 
-  expect(coffees.isRight()).toEqual(true);
-  if (coffees.isRight()) {
-    expect(coffees.value.getValue().length).toEqual(1);
-    expect(coffees.value.getValue()[0]).toBeInstanceOf(Coffee);
-    expect(coffees.value.getValue()[0].toPrimitives().name).toEqual('Café 3');
-    expect(coffees.value.getValue()[0].toPrimitives().origin).toEqual('Peru');
-  }
+    expect(coffees.isRight()).toEqual(true);
+    if (coffees.isRight()) {
+      expect(coffees.value.getValue().count).toEqual(1);
+      expect(coffees.value.getValue().data[0].toPrimitives().name).toEqual(
+        'Café 3',
+      );
+      expect(coffees.value.getValue().data[0].toPrimitives().origin).toEqual(
+        'Peru',
+      );
+    }
+  });
 });
 
 function addCoffeeToRepository(coffeeRepository: CoffeeRepositoryPort) {

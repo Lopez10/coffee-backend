@@ -49,28 +49,6 @@ export class CoffeePostgresRepository implements CoffeeRepositoryPort {
     return coffeesDomain;
   }
 
-  async findAllPaginated(
-    params: PaginatedQueryParams,
-  ): Promise<Paginated<Coffee>> {
-    const { limit, offset, orderBy } = params;
-    const coffees: CoffeeModel[] = await this.prisma.coffee.findMany({
-      take: limit,
-      skip: offset,
-      orderBy: {
-        [orderBy.field]: orderBy.param,
-      },
-    });
-    const coffeesDomain = coffees.map((coffee) =>
-      CoffeeMapper.toDomain(coffee),
-    );
-    return new Paginated({
-      count: coffees.length,
-      limit,
-      page: offset / limit,
-      data: coffeesDomain,
-    });
-  }
-
   async delete(id: string): Promise<boolean> {
     const coffeeDeleted = await this.prisma.coffee.delete({
       where: { id },
@@ -83,14 +61,27 @@ export class CoffeePostgresRepository implements CoffeeRepositoryPort {
     return this.prisma.$transaction(handler);
   }
 
-  async findByCriteria(criteria: any): Promise<Coffee[]> {
-    const coffees = await this.prisma.coffee.findMany({
+  async findPaginatedByCriteria(
+    criteria: any,
+    params: PaginatedQueryParams,
+  ): Promise<Paginated<Coffee>> {
+    const { limit, offset, orderBy } = params;
+    const coffees: CoffeeModel[] = await this.prisma.coffee.findMany({
+      take: limit,
+      skip: offset,
+      orderBy: {
+        [orderBy.field]: orderBy.param,
+      },
       where: criteria,
     });
     const coffeesDomain = coffees.map((coffee) =>
       CoffeeMapper.toDomain(coffee),
     );
-
-    return coffeesDomain;
+    return new Paginated({
+      count: coffees.length,
+      limit,
+      page: offset / limit,
+      data: coffeesDomain,
+    });
   }
 }

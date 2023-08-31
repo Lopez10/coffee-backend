@@ -35,7 +35,8 @@ export class UserPostgresRepository implements UserRepositoryPort {
     return usersDomain;
   }
 
-  async findAllPaginated(
+  async findPaginatedByCriteria(
+    criteria: any,
     params: PaginatedQueryParams,
   ): Promise<Paginated<User>> {
     const { limit, offset, orderBy } = params;
@@ -45,6 +46,7 @@ export class UserPostgresRepository implements UserRepositoryPort {
       orderBy: {
         [orderBy.field]: orderBy.param,
       },
+      where: criteria,
     });
     const usersDomain = users.map((user) => UserMapper.toDomain(user));
     return new Paginated({
@@ -53,14 +55,6 @@ export class UserPostgresRepository implements UserRepositoryPort {
       page: offset / limit,
       data: usersDomain,
     });
-  }
-
-  async findByCriteria(criteria: any): Promise<User[]> {
-    const users: UserModel[] = await this.prisma.user.findMany({
-      where: criteria,
-    });
-    const usersDomain = users.map((user) => UserMapper.toDomain(user));
-    return usersDomain;
   }
 
   async delete(id: string): Promise<boolean> {

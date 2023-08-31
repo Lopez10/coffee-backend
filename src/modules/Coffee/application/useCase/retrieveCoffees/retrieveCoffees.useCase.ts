@@ -1,4 +1,12 @@
-import { AppError, Either, Result, UseCase, left, right } from '@common';
+import {
+  AppError,
+  Either,
+  Paginated,
+  Result,
+  UseCase,
+  left,
+  right,
+} from '@common';
 import { Coffee } from 'src/modules/Coffee/domain/Coffee.entity';
 import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/Coffee.repository.port';
 
@@ -10,7 +18,7 @@ export interface RetrieveCoffeesDTO {
   userId?: string;
 }
 
-type Response = Either<AppError.UnexpectedError, Result<Coffee[]>>;
+type Response = Either<AppError.UnexpectedError, Result<Paginated<Coffee>>>;
 
 export class RetrieveCoffeesUseCase
   implements UseCase<RetrieveCoffeesDTO, Promise<Response>>
@@ -19,8 +27,16 @@ export class RetrieveCoffeesUseCase
 
   async run(request?: RetrieveCoffeesDTO): Promise<Response> {
     try {
-      const coffee = await this.coffeeRepository.findByCriteria(request);
-      return right(Result.ok<Coffee[]>(coffee));
+      const coffee = await this.coffeeRepository.findPaginatedByCriteria(
+        request,
+        {
+          page: 1,
+          limit: 10,
+          offset: 0,
+          orderBy: { field: 'createdAt', param: 'asc' },
+        },
+      );
+      return right(Result.ok<Paginated<Coffee>>(coffee));
     } catch (error) {
       return left(new AppError.UnexpectedError(error));
     }
