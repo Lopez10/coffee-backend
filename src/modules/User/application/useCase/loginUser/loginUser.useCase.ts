@@ -4,14 +4,13 @@ import {
   Email,
   Password,
   Result,
+  Token,
   UseCase,
   left,
   right,
 } from '@common';
-import { JWTToken, RefreshToken } from '@common/auth/jwt';
 import { LoginUserErrors } from './LoginUser.error';
 import { UserRepositoryPort } from 'src/modules/User/domain/User.repository.port';
-import { AuthServicePort } from 'src/modules/User/services/Auth.service.port';
 import { User } from 'src/modules/User/domain/User.entity';
 
 export interface LoginDTO {
@@ -20,8 +19,7 @@ export interface LoginDTO {
 }
 
 export interface LoginDTOResponse {
-  accessToken: JWTToken;
-  refreshToken: RefreshToken;
+  accessToken: Token;
 }
 
 type Response = Either<
@@ -33,11 +31,9 @@ type Response = Either<
 
 export class LoginUserUseCase implements UseCase<LoginDTO, Promise<Response>> {
   private userRepo: UserRepositoryPort;
-  private authService: AuthServicePort;
 
-  constructor(userRepo: UserRepositoryPort, authService: AuthServicePort) {
+  constructor(userRepo: UserRepositoryPort) {
     this.userRepo = userRepo;
-    this.authService = authService;
   }
   async run(request: LoginDTO): Promise<Response> {
     let email: Email;
@@ -62,29 +58,12 @@ export class LoginUserUseCase implements UseCase<LoginDTO, Promise<Response>> {
         return left(new LoginUserErrors.PasswordDoesntMatchError());
       }
 
-      const accessToken: JWTToken = this.authService.signJWT({
-        email: user.toPrimitives().email,
-
-        // TODO: Add isAdmin and isEmailVerified to the user entity and modify this fields
-        isAdmin: false,
-        isEmailVerified: true,
-
-        name: user.toPrimitives().name,
-        userId: user.toPrimitives().id,
-      });
-
-      const refreshToken: RefreshToken = this.authService.createRefreshToken();
-
-      user.setAccessToken(accessToken, refreshToken);
-
-      await this.authService.saveAuthenticatedUser(user);
-
-      return right(
-        Result.ok<LoginDTOResponse>({
-          accessToken,
-          refreshToken,
-        }),
+      const accessToken: Token = Token.generate(
+        process.env.JWT_SECRET_KEY,
+        user,
       );
+
+      return right(Result.ok<LoginDTOResponse>({ accessToken }));
     } catch (error) {
       return left(new AppError.UnexpectedError(error));
     }

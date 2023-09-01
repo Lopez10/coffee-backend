@@ -17,4 +17,12 @@ export namespace CreateUserErrors {
       } as UseCaseError);
     }
   }
+
+  export class AdminCannotBeCreatedError extends Result<UseCaseError> {
+    constructor() {
+      super(false, {
+        message: `Admin user cannot be created`,
+      } as UseCaseError);
+    }
+  }
 }

@@ -5,3 +5,5 @@ export * from './password.valueObject';
 export * from './name.valueObject';
 export * from './description.valueObject';
 export * from './orientation.valueObject';
+export * from './token.valueObject';
+export * from './role.valueObject';

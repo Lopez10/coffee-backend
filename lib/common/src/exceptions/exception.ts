@@ -4,6 +4,7 @@ import {
   ARGUMENT_OUT_OF_RANGE,
   CONFLICT,
   INTERNAL_SERVER_ERROR,
+  INVALID_TOKEN,
   NOT_FOUND,
 } from '.';
 import { ExceptionBase } from './exception.base';
@@ -42,4 +43,23 @@ export class InternalServerErrorException extends ExceptionBase {
   }
 
   readonly code = INTERNAL_SERVER_ERROR;
+}
+
+export class InvalidTokenException extends ExceptionBase {
+  static readonly message = 'Invalid token';
+
+  constructor(message = InvalidTokenException.message) {
+    super(message);
+  }
+
+  readonly code = INVALID_TOKEN;
+}
+
+export class InvalidRoleException extends ExceptionBase {
+  static readonly message = 'Invalid role';
+  constructor(role: string) {
+    super(`message: ${role}`);
+  }
+
+  readonly code = INVALID_TOKEN;
 }

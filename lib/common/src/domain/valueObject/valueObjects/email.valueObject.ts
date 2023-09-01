@@ -13,11 +13,11 @@ export class Email extends ValueObject<string> {
   }
 
   get name(): string {
-    return this.props.value?.substring(0, this.props.value?.lastIndexOf('@'));
+    return this.value.substring(0, this.props.value?.lastIndexOf('@'));
   }
 
   get domain(): string {
-    return this.props.value?.substring(this.props.value?.lastIndexOf('@') + 1);
+    return this.value.substring(this.props.value?.lastIndexOf('@') + 1);
   }
 
   protected validate({ value: email }: DomainPrimitive<string>): void {
