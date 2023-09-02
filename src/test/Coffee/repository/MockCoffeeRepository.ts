@@ -1,11 +1,11 @@
-import { PaginatedQueryParams, Paginated } from '@common';
+import { PaginatedQueryParams, Paginated, Name } from '@common';
 import { Coffee } from 'src/modules/Coffee/domain/Coffee.entity';
 import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/Coffee.repository.port';
 
 export class MockCoffeeRepository implements CoffeeRepositoryPort {
   private coffees: Coffee[] = [];
 
-  async findByName(name: string): Promise<Coffee[]> {
+  async findByName(name: Name): Promise<Coffee[]> {
     throw new Error('Method not implemented.');
   }
   async insert(entity: Coffee): Promise<void> {
