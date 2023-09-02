@@ -19,8 +19,9 @@ export class CreateCoffee implements UseCase<CoffeeDTO, Promise<Response>> {
   constructor(private readonly coffeeRepository: CoffeeRepositoryPort) {}
 
   async run(request: CoffeeDTO): Promise<Response> {
+    const name = new Name(request.name);
     const coffeeDomain = Coffee.create({
-      name: new Name(request.name),
+      name,
       origin: request.origin,
       height: request.height,
       roast: request.roast as roast,

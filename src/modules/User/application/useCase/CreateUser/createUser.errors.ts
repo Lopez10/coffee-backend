@@ -1,5 +1,4 @@
-import { Result } from '@common/Result';
-import { UseCaseError } from '@common/UseCaseError';
+import { Result, UseCaseError } from '@common';
 
 export namespace CreateUserErrors {
   export class EmailAlreadyExistsError extends Result<UseCaseError> {

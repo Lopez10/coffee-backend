@@ -1,4 +1,4 @@
-import { PaginatedQueryParams, Paginated } from '@common';
+import { PaginatedQueryParams, Paginated, Name } from '@common';
 import { CoffeeRepositoryPort } from '../../domain/Coffee.repository.port';
 import { PrismaClient, Coffee as CoffeeModel } from '@prisma/client';
 import { Coffee } from '../../domain/Coffee.entity';
@@ -10,9 +10,9 @@ export class CoffeePostgresRepository implements CoffeeRepositoryPort {
     this.prisma = new PrismaClient();
   }
 
-  async findByName(name: string): Promise<Coffee[]> {
+  async findByName(name: Name): Promise<Coffee[]> {
     const coffees = await this.prisma.coffee.findMany({
-      where: { name },
+      where: { name: name.value },
     });
     const coffeesDomain = coffees.map((coffee) =>
       CoffeeMapper.toDomain(coffee),

@@ -4,3 +4,4 @@ export * from './exceptions';
 export * from './Result';
 export * from './useCase.base';
 export * from './AppError';
+export * from './UseCaseError';
