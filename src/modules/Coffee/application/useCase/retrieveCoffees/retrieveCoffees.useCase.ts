@@ -7,8 +7,8 @@ import {
   left,
   right,
 } from '@common';
-import { Coffee } from 'src/modules/Coffee/domain/Coffee.entity';
-import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/Coffee.repository.port';
+import { Coffee } from '../../../domain/Coffee.entity';
+import { CoffeeRepositoryPort } from '../../../domain/Coffee.repository.port';
 
 export interface RetrieveCoffeesDTO {
   name?: string;

@@ -1,4 +1,4 @@
-import { PaginatedQueryParams, Paginated, Name } from '@common';
+import { PaginatedQueryParams, Paginated, Name, ID } from '@common';
 import { Coffee } from 'src/modules/Coffee/domain/Coffee.entity';
 import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/Coffee.repository.port';
 
@@ -6,7 +6,10 @@ export class MockCoffeeRepository implements CoffeeRepositoryPort {
   private coffees: Coffee[] = [];
 
   async findByName(name: Name): Promise<Coffee[]> {
-    throw new Error('Method not implemented.');
+    const coffees = this.coffees.filter((coffee) =>
+      coffee.getPropsCopy().name.equals(name),
+    );
+    return coffees;
   }
   async insert(entity: Coffee): Promise<void> {
     this.coffees.push(entity);
@@ -14,19 +17,38 @@ export class MockCoffeeRepository implements CoffeeRepositoryPort {
   async insertSome(entity: Coffee[]): Promise<void> {
     this.coffees.push(...entity);
   }
-  async findOneById(id: string): Promise<Coffee> {
-    throw new Error('Method not implemented.');
+  async findOneById(id: ID): Promise<Coffee> {
+    const coffee = this.coffees.find((coffee) =>
+      coffee.getPropsCopy().id.equals(id),
+    );
+    return coffee;
   }
   async findAll(): Promise<Coffee[]> {
-    throw new Error('Method not implemented.');
+    return this.coffees;
   }
   async findAllPaginated(
     params: PaginatedQueryParams,
   ): Promise<Paginated<Coffee>> {
-    throw new Error('Method not implemented.');
+    const paginatedCoffees = new Paginated<Coffee>({
+      count: this.coffees.length,
+      page: params.page,
+      limit: params.limit,
+      data: this.coffees,
+    });
+
+    return paginatedCoffees;
   }
-  async delete(id: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async delete(id: ID): Promise<boolean> {
+    const coffee = this.coffees.find((coffee) =>
+      coffee.getPropsCopy().id.equals(id),
+    );
+    if (!coffee) {
+      return false;
+    }
+    this.coffees = this.coffees.filter(
+      (coffee) => !coffee.getPropsCopy().id.equals(id),
+    );
+    return true;
   }
 
   async findPaginatedByCriteria(
@@ -55,6 +77,6 @@ export class MockCoffeeRepository implements CoffeeRepositoryPort {
   }
 
   async transaction<T>(handler: () => Promise<T>): Promise<T> {
-    throw new Error('Method not implemented.');
+    return handler();
   }
 }

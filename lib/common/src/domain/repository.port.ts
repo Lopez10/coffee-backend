@@ -1,3 +1,5 @@
+import { ID } from './valueObject';
+
 export class Paginated<T> {
   readonly count: number;
   readonly limit: number;
@@ -24,9 +26,9 @@ export type PaginatedQueryParams = {
 export interface RepositoryPort<Entity> {
   insert(entity: Entity): Promise<void>;
   insertSome(entity: Entity[]): Promise<void>;
-  findOneById(id: string): Promise<Entity | null>;
+  findOneById(id: ID): Promise<Entity | null>;
   findAll(): Promise<Entity[]>;
-  delete(id: string): Promise<boolean>;
+  delete(id: ID): Promise<boolean>;
   findPaginatedByCriteria(
     criteria: any,
     params: PaginatedQueryParams,

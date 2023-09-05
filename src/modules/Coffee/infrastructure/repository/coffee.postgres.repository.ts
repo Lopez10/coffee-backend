@@ -1,4 +1,4 @@
-import { PaginatedQueryParams, Paginated, Name } from '@common';
+import { PaginatedQueryParams, Paginated, Name, ID } from '@common';
 import { CoffeeRepositoryPort } from '../../domain/Coffee.repository.port';
 import { PrismaClient, Coffee as CoffeeModel } from '@prisma/client';
 import { Coffee } from '../../domain/Coffee.entity';
@@ -33,9 +33,9 @@ export class CoffeePostgresRepository implements CoffeeRepositoryPort {
     await this.prisma.coffee.createMany({ data: coffees });
   }
 
-  async findOneById(id: string): Promise<Coffee> {
+  async findOneById(id: ID): Promise<Coffee> {
     const coffee: CoffeeModel = await this.prisma.coffee.findUnique({
-      where: { id },
+      where: { id: id.value },
     });
     const coffeeDomain = CoffeeMapper.toDomain(coffee);
     return coffeeDomain;
@@ -49,9 +49,9 @@ export class CoffeePostgresRepository implements CoffeeRepositoryPort {
     return coffeesDomain;
   }
 
-  async delete(id: string): Promise<boolean> {
+  async delete(id: ID): Promise<boolean> {
     const coffeeDeleted = await this.prisma.coffee.delete({
-      where: { id },
+      where: { id: id.value },
     });
 
     if (!coffeeDeleted) return false;

@@ -1,8 +1,8 @@
 import { ID, Name } from '@common';
-import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/Coffee.repository.port';
-import { RetrieveCoffeesUseCase } from '../../../modules/Coffee/application/useCase/retrieveCoffees/RetrieveCoffees.useCase';
+import { CoffeeRepositoryPort } from '../../../../modules/Coffee/domain/Coffee.repository.port';
 import { MockCoffeeRepository } from '../../repository/MockCoffeeRepository';
-import { Coffee } from '../../../modules/Coffee/domain/Coffee.entity';
+import { RetrieveCoffeesUseCase } from '../../../../modules/Coffee/application/useCase/retrieveCoffees/RetrieveCoffees.useCase';
+import { Coffee } from '../../../..//modules/Coffee/domain/Coffee.entity';
 
 const coffeeRepository: CoffeeRepositoryPort = new MockCoffeeRepository();
 addCoffeeToRepository(coffeeRepository);

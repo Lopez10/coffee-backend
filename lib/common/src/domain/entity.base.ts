@@ -36,7 +36,7 @@ export abstract class Entity<T> {
     return this._id.equals(object._id);
   }
 
-  public getPropsCopy(): T {
+  public getPropsCopy(): Readonly<{ id: ID } & T> {
     const propsCopy = {
       id: this._id,
       ...this.props,
