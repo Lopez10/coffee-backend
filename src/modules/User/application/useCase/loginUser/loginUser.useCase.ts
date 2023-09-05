@@ -52,7 +52,7 @@ export class LoginUserUseCase implements UseCase<LoginDTO, Promise<Response>> {
         return left(new LoginUserErrors.EmailDoesntExistError(email.value));
       }
 
-      const passwordValid = await user.props.password.equals(password);
+      const passwordValid = user.props.password.equals(password);
 
       if (!passwordValid) {
         return left(new LoginUserErrors.PasswordDoesntMatchError());

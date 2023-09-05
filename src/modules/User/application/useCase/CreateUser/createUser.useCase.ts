@@ -14,7 +14,7 @@ import {
 import { CreateUserErrors } from './CreateUser.errors';
 import { UserRepositoryPort } from '../../../domain/User.repository.port';
 import { User } from '../../../domain/User.entity';
-import { UserDTO } from 'src/modules/User/user.mapper';
+import { UserDTO } from '../../../user.mapper';
 
 type Response = Either<
   | CreateUserErrors.EmailAlreadyExistsError
