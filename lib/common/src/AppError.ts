@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { Result } from './Result';
-import { UseCaseError } from './UseCaseError';
+import { Result } from './application/Result';
+import { UseCaseError } from './application/UseCase.error';
 
 export namespace AppError {
   export class UnexpectedError extends Result<UseCaseError> {

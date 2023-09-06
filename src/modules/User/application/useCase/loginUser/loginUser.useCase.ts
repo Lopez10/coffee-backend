@@ -5,7 +5,7 @@ import {
   Password,
   Result,
   Token,
-  UseCase,
+  UseCaseBase,
   left,
   right,
 } from '@common';
@@ -29,7 +29,7 @@ type Response = Either<
   Result<LoginDTOResponse>
 >;
 
-export class LoginUserUseCase implements UseCase<LoginDTO, Promise<Response>> {
+export class LoginUserUseCase implements UseCaseBase<LoginDTO, Promise<Response>> {
   private userRepo: UserRepositoryPort;
 
   constructor(userRepo: UserRepositoryPort) {

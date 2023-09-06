@@ -4,6 +4,8 @@ import {
   ARGUMENT_OUT_OF_RANGE,
   CONFLICT,
   INTERNAL_SERVER_ERROR,
+  INVALID_ROAST,
+  INVALID_ROLE,
   INVALID_TOKEN,
   NOT_FOUND,
 } from '.';
@@ -61,5 +63,14 @@ export class InvalidRoleException extends ExceptionBase {
     super(`message: ${role}`);
   }
 
-  readonly code = INVALID_TOKEN;
+  readonly code = INVALID_ROLE;
+}
+
+export class InvalidRoastError extends ExceptionBase {
+  static readonly message = 'Invalid roast';
+  constructor(roast: string) {
+    super(`message: ${roast}`);
+  }
+
+  readonly code = INVALID_ROAST;
 }

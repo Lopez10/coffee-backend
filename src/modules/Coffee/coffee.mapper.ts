@@ -1,4 +1,4 @@
-import { ID, Name, roast } from '@common';
+import { ID, Name, Roast } from '@common';
 import { Coffee } from './domain/Coffee.entity';
 
 export interface CoffeeDTO {
@@ -17,7 +17,7 @@ export class CoffeeMapper {
         name: new Name(coffee.name),
         origin: coffee.origin,
         height: coffee.height,
-        roast: coffee.roast as roast,
+        roast: new Roast(coffee.roast),
         userId: new ID(coffee.id),
       },
       new ID(coffee.id),

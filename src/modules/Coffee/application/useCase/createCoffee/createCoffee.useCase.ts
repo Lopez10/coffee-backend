@@ -4,10 +4,10 @@ import {
   ID,
   Name,
   Result,
-  UseCase,
+  Roast,
+  UseCaseBase,
   left,
   right,
-  roast,
 } from '@common';
 import { CoffeeDTO } from '../../../Coffee.mapper';
 import { Coffee } from '../../../domain/Coffee.entity';
@@ -15,7 +15,9 @@ import { CoffeeRepositoryPort } from '../../../domain/Coffee.repository.port';
 
 type Response = Either<AppError.UnexpectedError, Result<void>>;
 
-export class CreateCoffee implements UseCase<CoffeeDTO, Promise<Response>> {
+export class CreateCoffeeUseCase
+  implements UseCaseBase<CoffeeDTO, Promise<Response>>
+{
   constructor(private readonly coffeeRepository: CoffeeRepositoryPort) {}
 
   async run(request: CoffeeDTO): Promise<Response> {
@@ -25,7 +27,7 @@ export class CreateCoffee implements UseCase<CoffeeDTO, Promise<Response>> {
         name,
         origin: request.origin,
         height: request.height,
-        roast: request.roast as roast,
+        roast: new Roast(request.roast),
         userId: new ID(request.userId),
       },
       new ID(request.id),

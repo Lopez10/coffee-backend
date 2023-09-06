@@ -1,4 +1,3 @@
-export type roast = 'light' | 'medium' | 'dark';
 export type extraction =
   | 'aeropress'
   | 'v60'

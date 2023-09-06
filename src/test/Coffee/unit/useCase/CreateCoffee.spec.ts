@@ -1,10 +1,10 @@
 import { CoffeeRepositoryPort } from '../../../../modules/Coffee/domain/Coffee.repository.port';
 import { MockCoffeeRepository } from '../../repository/MockCoffeeRepository';
-import { CreateCoffee } from '../../../../modules/Coffee/application/useCase/createCoffee/CreateCoffee.useCase';
+import { CreateCoffeeUseCase } from '../../../../modules/Coffee/application/useCase/createCoffee/CreateCoffee.useCase';
 import { ID } from '@common';
 
 const coffeeRepository: CoffeeRepositoryPort = new MockCoffeeRepository();
-const action = new CreateCoffee(coffeeRepository);
+const action = new CreateCoffeeUseCase(coffeeRepository);
 
 describe('Create Coffee', () => {
   it(`

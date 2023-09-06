@@ -1,4 +1,4 @@
-import { Password } from '../password.valueObject';
+import { Password } from '../Password.valueObject';
 
 describe('Password value object test', () => {
   const passwordInvalid = '123';

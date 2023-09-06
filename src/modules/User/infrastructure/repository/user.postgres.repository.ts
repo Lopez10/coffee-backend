@@ -3,7 +3,7 @@ import { PrismaClient, User as UserModel } from '@prisma/client';
 import { User } from '../../domain/User.entity';
 import { UserRepositoryPort } from '../../domain/User.repository.port';
 import { UserMapper } from '../../user.mapper';
-import prisma from '@common/db';
+import prisma from '@common/infrastructure/db';
 
 export class UserPostgresRepository implements UserRepositoryPort {
   private prisma: PrismaClient;

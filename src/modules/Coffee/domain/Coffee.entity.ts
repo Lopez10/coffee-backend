@@ -1,10 +1,10 @@
-import { Entity, ID, Name, roast } from '@common';
+import { Entity, ID, Name, Roast } from '@common';
 
 export interface coffeeProps {
   name: Name;
   origin: string;
   height: number;
-  roast: roast;
+  roast: Roast;
   userId: ID;
 }
 
@@ -19,7 +19,7 @@ export class Coffee extends Entity<coffeeProps> {
       name: this.props.name.value,
       origin: this.props.origin,
       height: this.props.height,
-      roast: this.props.roast,
+      roast: this.props.roast.value,
       userId: this.props.userId.value,
     };
   }

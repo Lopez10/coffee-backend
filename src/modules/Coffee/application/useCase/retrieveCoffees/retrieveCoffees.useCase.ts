@@ -3,7 +3,7 @@ import {
   Either,
   Paginated,
   Result,
-  UseCase,
+  UseCaseBase,
   left,
   right,
 } from '@common';
@@ -21,7 +21,7 @@ export interface RetrieveCoffeesDTO {
 type Response = Either<AppError.UnexpectedError, Result<Paginated<Coffee>>>;
 
 export class RetrieveCoffeesUseCase
-  implements UseCase<RetrieveCoffeesDTO, Promise<Response>>
+  implements UseCaseBase<RetrieveCoffeesDTO, Promise<Response>>
 {
   constructor(private readonly coffeeRepository: CoffeeRepositoryPort) {}
 
