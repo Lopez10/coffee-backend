@@ -1,13 +1,13 @@
 import { User } from './domain/User.entity';
 import { User as UserModel } from '@prisma/client';
 import {
+  CoffeeExtraction,
   Description,
   Email,
   ID,
   Name,
   Password,
   Role,
-  extraction,
 } from '@common';
 
 export interface UserDTO {
@@ -18,7 +18,7 @@ export interface UserDTO {
   description: string;
   role: string;
   coffeeCounter: number | null;
-  coffeeExtraction: extraction | null;
+  coffeeExtraction: string | null;
   coffeeGrinderMachine: string | null;
   coffeeExtractionMachine: string | null;
 }
@@ -33,7 +33,7 @@ export class UserMapper {
         description: new Description(user.description),
         role: new Role(user.role),
         coffeeCounter: user.coffeeCounter,
-        coffeeExtraction: user.coffeeExtraction as extraction,
+        coffeeExtraction: new CoffeeExtraction(user.coffeeExtraction),
         coffeeGrinderMachine: user.coffeeGrinderMachine,
         coffeeExtractionMachine: user.coffeeExtractionMachine,
       },

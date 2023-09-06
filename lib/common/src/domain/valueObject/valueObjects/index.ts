@@ -8,3 +8,4 @@ export * from './Orientation.valueObject';
 export * from './Token.valueObject';
 export * from './Role.valueObject';
 export * from './Roast.valueObject';
+export * from './CoffeeExtraction.valueObject';

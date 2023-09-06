@@ -1,4 +1,5 @@
 import {
+  CoffeeExtraction,
   Description,
   Email,
   Entity,
@@ -6,7 +7,6 @@ import {
   Name,
   Password,
   Role,
-  extraction,
 } from '@common';
 
 export interface UserProps {
@@ -16,7 +16,7 @@ export interface UserProps {
   description: Description;
   role: Role;
   coffeeCounter?: number;
-  coffeeExtraction?: extraction;
+  coffeeExtraction?: CoffeeExtraction;
   coffeeGrinderMachine?: string;
   coffeeExtractionMachine?: string;
 }
@@ -39,7 +39,7 @@ export class User extends Entity<UserProps> {
       description: this.props.description.value,
       role: this.props.role.value,
       coffeeCounter: this.props.coffeeCounter,
-      coffeeExtraction: this.props.coffeeExtraction,
+      coffeeExtraction: this.props.coffeeExtraction.value,
       coffeeGrinderMachine: this.props.coffeeGrinderMachine,
       coffeeExtractionMachine: this.props.coffeeExtractionMachine,
     };

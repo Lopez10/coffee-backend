@@ -4,6 +4,7 @@ import {
   ARGUMENT_OUT_OF_RANGE,
   CONFLICT,
   INTERNAL_SERVER_ERROR,
+  INVALID_COFFEE_EXTRACTION,
   INVALID_ROAST,
   INVALID_ROLE,
   INVALID_TOKEN,
@@ -73,4 +74,13 @@ export class InvalidRoastError extends ExceptionBase {
   }
 
   readonly code = INVALID_ROAST;
+}
+
+export class InvalidCoffeeExtraction extends ExceptionBase {
+  static readonly message = 'Invalid coffee extraction';
+  constructor(extraction: string) {
+    super(`message: ${extraction}`);
+  }
+
+  readonly code = INVALID_COFFEE_EXTRACTION;
 }
