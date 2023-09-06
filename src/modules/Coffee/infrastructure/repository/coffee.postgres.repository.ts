@@ -3,11 +3,12 @@ import { CoffeeRepositoryPort } from '../../domain/Coffee.repository.port';
 import { PrismaClient, Coffee as CoffeeModel } from '@prisma/client';
 import { Coffee } from '../../domain/Coffee.entity';
 import { CoffeeMapper } from '../../Coffee.mapper';
+import prisma from '@common/db';
 
 export class CoffeePostgresRepository implements CoffeeRepositoryPort {
   private prisma: PrismaClient;
   constructor() {
-    this.prisma = new PrismaClient();
+    this.prisma = prisma;
   }
 
   async findByName(name: Name): Promise<Coffee[]> {

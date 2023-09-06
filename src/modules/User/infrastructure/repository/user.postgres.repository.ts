@@ -3,11 +3,12 @@ import { PrismaClient, User as UserModel } from '@prisma/client';
 import { User } from '../../domain/User.entity';
 import { UserRepositoryPort } from '../../domain/User.repository.port';
 import { UserMapper } from '../../user.mapper';
+import prisma from '@common/db';
 
 export class UserPostgresRepository implements UserRepositoryPort {
   private prisma: PrismaClient;
   constructor() {
-    this.prisma = new PrismaClient();
+    this.prisma = prisma;
   }
 
   async insert(entity: User): Promise<void> {

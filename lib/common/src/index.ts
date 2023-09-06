@@ -5,3 +5,4 @@ export * from './Result';
 export * from './useCase.base';
 export * from './AppError';
 export * from './UseCaseError';
+export * from './db';

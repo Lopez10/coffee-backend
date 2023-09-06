@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { userRouter } from './modules/User/infrastructure/restAPI/route/createUser.routes';
+// import { userRouter } from './modules/User/infrastructure/restAPI/route/createUser.routes';
 
 const router = Router();
 
@@ -7,6 +7,6 @@ router.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-router.use('/users', userRouter);
+// router.use('/users', userRouter);
 
 export { router };
