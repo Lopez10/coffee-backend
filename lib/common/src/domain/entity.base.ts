@@ -1,4 +1,4 @@
-import { Guard } from 'lib/guard';
+import { Guard } from './guard';
 import { ID } from './valueObject';
 import {
   ArgumentNotProvidedException,
