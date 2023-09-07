@@ -24,7 +24,9 @@ type Response = Either<
   Result<void>
 >;
 
-export class CreateUserUseCase implements UseCaseBase<UserDTO, Promise<Response>> {
+export class CreateUserUseCase
+  implements UseCaseBase<UserDTO, Promise<Response>>
+{
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
   async run(request: UserDTO): Promise<Response> {

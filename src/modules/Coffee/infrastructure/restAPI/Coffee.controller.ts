@@ -21,7 +21,7 @@ export class CoffeeController extends ControllerBase {
   }
 
   @Get()
-  async getCoffees() {
+  async retrieveCoffees() {
     const useCase = new RetrieveCoffeesUseCase(this.coffeeRepository);
     this.runController(useCase);
   }

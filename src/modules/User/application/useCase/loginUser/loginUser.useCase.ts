@@ -29,7 +29,9 @@ type Response = Either<
   Result<LoginDTOResponse>
 >;
 
-export class LoginUserUseCase implements UseCaseBase<LoginDTO, Promise<Response>> {
+export class LoginUserUseCase
+  implements UseCaseBase<LoginDTO, Promise<Response>>
+{
   private userRepo: UserRepositoryPort;
 
   constructor(userRepo: UserRepositoryPort) {
