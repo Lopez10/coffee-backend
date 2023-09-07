@@ -17,7 +17,7 @@ describe('Create Coffee', () => {
       name: 'Café 1',
       origin: 'Peru',
       height: 100,
-      roast: 'light',
+      roast: 'LIGHT',
       userId: 'user1',
       id: 'coffee1',
     };
@@ -32,7 +32,7 @@ describe('Create Coffee', () => {
     expect(coffee.toPrimitives().name).toEqual('Café 1');
     expect(coffee.toPrimitives().origin).toEqual('Peru');
     expect(coffee.toPrimitives().height).toEqual(100);
-    expect(coffee.toPrimitives().roast).toEqual('light');
+    expect(coffee.toPrimitives().roast).toEqual('LIGHT');
     expect(coffee.toPrimitives().userId).toEqual('user1');
   });
 });

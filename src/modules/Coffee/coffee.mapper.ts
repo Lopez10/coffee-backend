@@ -18,7 +18,7 @@ export class CoffeeMapper {
         origin: coffee.origin,
         height: coffee.height,
         roast: new Roast(coffee.roast),
-        userId: new ID(coffee.id),
+        userId: new ID(coffee.userId),
       },
       new ID(coffee.id),
     );

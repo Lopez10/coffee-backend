@@ -1,53 +1,60 @@
 import { PaginatedQueryParams, Paginated, Name, ID } from '@common';
-import { Coffee } from 'src/modules/Coffee/domain/Coffee.entity';
-import { CoffeeRepositoryPort } from 'src/modules/Coffee/domain/Coffee.repository.port';
+import { CoffeeDTO, CoffeeMapper } from '../../../modules/Coffee/Coffee.mapper';
+import { Coffee } from '../../../modules/Coffee/domain/Coffee.entity';
+import { CoffeeRepositoryPort } from '../../../modules/Coffee/domain/Coffee.repository.port';
 
 export class MockCoffeeRepository implements CoffeeRepositoryPort {
-  private coffees: Coffee[] = [];
+  private coffees: CoffeeDTO[] = [];
 
   async findByName(name: Name): Promise<Coffee[]> {
-    const coffees = this.coffees.filter((coffee) =>
-      coffee.getPropsCopy().name.equals(name),
+    const coffeesData = this.coffees.filter(
+      (coffee) => coffee.name === name.value,
     );
+
+    const coffees = coffeesData.map((coffee) => CoffeeMapper.toDomain(coffee));
+
     return coffees;
   }
   async insert(entity: Coffee): Promise<void> {
-    this.coffees.push(entity);
+    const coffeeData = CoffeeMapper.toDTO(entity);
+    this.coffees.push(coffeeData);
   }
-  async insertSome(entity: Coffee[]): Promise<void> {
-    this.coffees.push(...entity);
+  async insertSome(entities: Coffee[]): Promise<void> {
+    const coffeesData = entities.map((entity) => CoffeeMapper.toDTO(entity));
+    this.coffees.push(...coffeesData);
   }
   async findOneById(id: ID): Promise<Coffee> {
-    const coffee = this.coffees.find((coffee) =>
-      coffee.getPropsCopy().id.equals(id),
-    );
+    const coffeeData = this.coffees.find((coffee) => coffee.id === id.value);
+    const coffee = CoffeeMapper.toDomain(coffeeData);
+
     return coffee;
   }
   async findAll(): Promise<Coffee[]> {
-    return this.coffees;
+    const coffees = this.coffees.map((coffee) => CoffeeMapper.toDomain(coffee));
+    return coffees;
   }
   async findAllPaginated(
     params: PaginatedQueryParams,
   ): Promise<Paginated<Coffee>> {
+    const coffees = this.coffees.map((coffee) => CoffeeMapper.toDomain(coffee));
     const paginatedCoffees = new Paginated<Coffee>({
-      count: this.coffees.length,
+      count: coffees.length,
       page: params.page,
       limit: params.limit,
-      data: this.coffees,
+      data: coffees,
     });
 
     return paginatedCoffees;
   }
   async delete(id: ID): Promise<boolean> {
-    const coffee = this.coffees.find((coffee) =>
-      coffee.getPropsCopy().id.equals(id),
-    );
-    if (!coffee) {
+    const coffeeData = this.coffees.find((coffee) => coffee.id === id.value);
+
+    if (!coffeeData) {
       return false;
     }
-    this.coffees = this.coffees.filter(
-      (coffee) => !coffee.getPropsCopy().id.equals(id),
-    );
+
+    this.coffees = this.coffees.filter((coffee) => coffee.id !== id.value);
+
     return true;
   }
 
@@ -55,17 +62,17 @@ export class MockCoffeeRepository implements CoffeeRepositoryPort {
     criteria: any,
     params: PaginatedQueryParams,
   ): Promise<Paginated<Coffee>> {
-    const coffees = this.coffees.filter((coffee) => {
+    const coffeesData = this.coffees.filter((coffee) => {
       let isValid = true;
-      const coffeeProps = coffee.toPrimitives();
       for (const key in criteria) {
-        if (coffeeProps[key] !== criteria[key]) {
+        if (coffee[key] !== criteria[key]) {
           isValid = false;
         }
       }
       return isValid;
     });
 
+    const coffees = coffeesData.map((coffee) => CoffeeMapper.toDomain(coffee));
     const paginatedCoffees = new Paginated<Coffee>({
       count: coffees.length,
       page: params.page,

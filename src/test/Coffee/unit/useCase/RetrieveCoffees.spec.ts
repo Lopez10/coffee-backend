@@ -1,4 +1,4 @@
-import { ID, Name } from '@common';
+import { ID, Name, Roast } from '@common';
 import { CoffeeRepositoryPort } from '../../../../modules/Coffee/domain/Coffee.repository.port';
 import { MockCoffeeRepository } from '../../repository/MockCoffeeRepository';
 import { RetrieveCoffeesUseCase } from '../../../../modules/Coffee/application/useCase/retrieveCoffees/RetrieveCoffees.useCase';
@@ -70,7 +70,7 @@ function addCoffeeToRepository(coffeeRepository: CoffeeRepositoryPort) {
         name: new Name('Café 1'),
         origin: 'Peru',
         height: 1000,
-        roast: 'light',
+        roast: new Roast('LIGHT'),
         userId: new ID('User1'),
       },
       new ID('Coffee1'),
@@ -80,7 +80,7 @@ function addCoffeeToRepository(coffeeRepository: CoffeeRepositoryPort) {
         name: new Name('Café 2'),
         origin: 'El Salvador',
         height: 1000,
-        roast: 'dark',
+        roast: new Roast('DARK'),
         userId: new ID('User1'),
       },
       new ID('Coffee2'),
@@ -90,7 +90,7 @@ function addCoffeeToRepository(coffeeRepository: CoffeeRepositoryPort) {
         name: new Name('Café 3'),
         origin: 'Peru',
         height: 2500,
-        roast: 'medium',
+        roast: new Roast('MEDIUM'),
         userId: new ID('User1'),
       },
       new ID('Coffee3'),
