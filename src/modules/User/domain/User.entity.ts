@@ -37,11 +37,11 @@ export class User extends Entity<UserProps> {
       email: this.props.email.value,
       password: this.props.password.value,
       role: this.props.role.value,
-      description: this.props.description.value || null,
-      coffeeCounter: this.props.coffeeCounter || null,
-      coffeeExtraction: this.props.coffeeExtraction.value || null,
-      coffeeGrinderMachine: this.props.coffeeGrinderMachine || null,
-      coffeeExtractionMachine: this.props.coffeeExtractionMachine || null,
+      description: this.props.description.value,
+      coffeeCounter: this.props.coffeeCounter,
+      coffeeExtraction: this.props.coffeeExtraction.value,
+      coffeeGrinderMachine: this.props.coffeeGrinderMachine,
+      coffeeExtractionMachine: this.props.coffeeExtractionMachine,
     };
   }
 

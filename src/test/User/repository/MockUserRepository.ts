@@ -29,6 +29,9 @@ export class MockUserRepository implements UserRepositoryPort {
   }
   async findOneById(id: ID): Promise<User> {
     const userData = this.users.find((user) => user.id === id.value);
+    if (!userData) {
+      return null;
+    }
     const user = UserMapper.toDomain(userData);
 
     return user;

@@ -10,7 +10,7 @@ const action = new RetrieveCoffeesUseCase(coffeeRepository);
 
 describe('Retrieve Coffees', () => {
   it(`
-    GIVEN I have 3 coffees 
+    GIVEN There are 3 coffees 
     WHEN I retrieve all the coffees with the name 'Café 1'
     THEN I get the only coffee with that name
   `, async () => {

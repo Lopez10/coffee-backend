@@ -1,6 +1,6 @@
 import { AppError, Either, ID, UseCaseBase, left, right } from '@common';
-import { User } from 'src/modules/User/domain/User.entity';
-import { UserRepositoryPort } from 'src/modules/User/domain/User.repository.port';
+import { User } from '../../../domain/User.entity';
+import { UserRepositoryPort } from '../../../domain/User.repository.port';
 
 export interface RetrieveUserDTO {
   id: string;
