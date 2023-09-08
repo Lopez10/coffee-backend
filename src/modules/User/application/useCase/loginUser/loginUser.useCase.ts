@@ -10,8 +10,8 @@ import {
   right,
 } from '@common';
 import { LoginUserErrors } from './LoginUser.error';
-import { UserRepositoryPort } from 'src/modules/User/domain/User.repository.port';
-import { User } from 'src/modules/User/domain/User.entity';
+import { UserRepositoryPort } from '../../../domain/User.repository.port';
+import { User } from '../../../domain/User.entity';
 
 export interface LoginDTO {
   email: string;
@@ -47,13 +47,11 @@ export class LoginUserUseCase
       password = new Password(request.password);
 
       user = await this.userRepo.findOneByEmail(email);
-
       const userFound = !!user;
 
       if (!userFound) {
         return left(new LoginUserErrors.EmailDoesntExistError(email.value));
       }
-
       const passwordValid = user.props.password.equals(password);
 
       if (!passwordValid) {

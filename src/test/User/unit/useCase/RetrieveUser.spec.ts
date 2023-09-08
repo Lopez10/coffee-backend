@@ -5,7 +5,6 @@ import { addUsersToRepository } from '../../repository/MockUserData';
 
 describe('Retrieve User', () => {
   const userRepository: UserRepositoryPort = new MockUserRepository();
-  addUsersToRepository(userRepository);
   const action = new RetrieveUserUseCase(userRepository);
   it(`
     GIVEN There are 3 different users
@@ -13,9 +12,14 @@ describe('Retrieve User', () => {
     THEN I get the user with that id
   `, async () => {
     // GIVEN
+    addUsersToRepository(userRepository);
+
+    // WHEN
     const user = await action.run({
       id: 'user1',
     });
+
+    // THEN
     expect(user.isRight()).toEqual(true);
     if (user.isRight()) {
       expect(user.value.toPrimitives().id).toEqual('user1');

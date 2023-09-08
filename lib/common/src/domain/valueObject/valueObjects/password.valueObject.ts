@@ -6,7 +6,9 @@ export class Password extends ValueObject<string> {
   constructor(value: string, key?: string) {
     super({ value });
     this.validate({ value });
-    this.props.value = Password.encryptPassword(value, key);
+    if (!Password.isEncripted(value)) {
+      this.props.value = Password.encryptPassword(value, key);
+    }
   }
 
   protected validate({ value: password }: DomainPrimitive<string>): void {
@@ -22,6 +24,10 @@ export class Password extends ValueObject<string> {
     if (!validPassword) {
       throw new Error('Password has incorrect');
     }
+  }
+
+  static isEncripted(password: string): boolean {
+    return password.startsWith('U2Fsd');
   }
 
   static encryptPassword(password: string, encryptKey?: string): string {
@@ -48,6 +54,13 @@ export class Password extends ValueObject<string> {
 
   get value(): string {
     return this.props.value;
+  }
+
+  public equals(password: Password): boolean {
+    return (
+      Password.decryptPassword(this.props.value) ===
+      Password.decryptPassword(password.value)
+    );
   }
 }
 
