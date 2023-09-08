@@ -1,5 +1,4 @@
 import {
-  Description,
   Email,
   Name,
   Password,
@@ -10,11 +9,13 @@ import {
   left,
   right,
   Role,
+  CoffeeExtraction,
+  Description,
 } from '@common';
 import { CreateUserErrors } from './CreateUser.errors';
 import { UserRepositoryPort } from '../../../domain/User.repository.port';
 import { User } from '../../../domain/User.entity';
-import { UserDTO } from '../../../user.mapper';
+import { UserDTO } from 'src/modules/User/user.mapper';
 
 type Response = Either<
   | CreateUserErrors.EmailAlreadyExistsError
@@ -36,11 +37,14 @@ export class CreateUserUseCase
       email,
       password: new Password(request.password),
       name: new Name(request.name),
-      description: new Description(request.description),
       role,
+      description: new Description(request.description),
+      coffeeCounter: request.coffeeCounter,
+      coffeeExtraction: new CoffeeExtraction(request.coffeeExtraction),
+      coffeeExtractionMachine: request.coffeeExtractionMachine,
+      coffeeGrinderMachine: request.coffeeGrinderMachine,
     };
     const user = User.create(userValues);
-
     try {
       const userAlreadyExists = await this.userRepository.findOneByEmail(email);
       if (userAlreadyExists) {

@@ -13,8 +13,8 @@ export interface UserProps {
   email: Email;
   password: Password;
   name: Name;
-  description: Description;
   role: Role;
+  description?: Description;
   coffeeCounter?: number;
   coffeeExtraction?: CoffeeExtraction;
   coffeeGrinderMachine?: string;
@@ -36,12 +36,12 @@ export class User extends Entity<UserProps> {
       name: this.props.name.value,
       email: this.props.email.value,
       password: this.props.password.value,
-      description: this.props.description.value,
       role: this.props.role.value,
-      coffeeCounter: this.props.coffeeCounter,
-      coffeeExtraction: this.props.coffeeExtraction.value,
-      coffeeGrinderMachine: this.props.coffeeGrinderMachine,
-      coffeeExtractionMachine: this.props.coffeeExtractionMachine,
+      description: this.props.description.value || null,
+      coffeeCounter: this.props.coffeeCounter || null,
+      coffeeExtraction: this.props.coffeeExtraction.value || null,
+      coffeeGrinderMachine: this.props.coffeeGrinderMachine || null,
+      coffeeExtractionMachine: this.props.coffeeExtractionMachine || null,
     };
   }
 

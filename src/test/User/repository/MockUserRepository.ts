@@ -1,14 +1,18 @@
 import { Email, ID, PaginatedQueryParams, Paginated } from '@common';
-import { User } from 'src/modules/User/domain/User.entity';
-import { UserRepositoryPort } from 'src/modules/User/domain/User.repository.port';
-import { UserDTO, UserMapper } from 'src/modules/User/user.mapper';
+import { User } from '../../../modules/User/domain/User.entity';
+import { UserRepositoryPort } from '../../../modules/User/domain/User.repository.port';
+import { UserDTO, UserMapper } from '../../../modules/User/user.mapper';
 
 export class MockUserRepository implements UserRepositoryPort {
   private users: UserDTO[] = [];
 
   async findOneByEmail(email: Email): Promise<User> {
     const userData = this.users.find((user) => user.email === email.value);
+    if (!userData) {
+      return null;
+    }
     const user = UserMapper.toDomain(userData);
+
     return user;
   }
   async insert(entity: User): Promise<void> {
