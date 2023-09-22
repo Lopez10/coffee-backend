@@ -12,7 +12,6 @@ export class MockUserRepository implements UserRepositoryPort {
       return null;
     }
     const user = UserMapper.toDomain(userData);
-
     return user;
   }
   async insert(entity: User): Promise<void> {

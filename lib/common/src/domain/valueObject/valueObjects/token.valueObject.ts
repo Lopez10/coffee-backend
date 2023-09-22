@@ -15,6 +15,7 @@ export class TokenPayload {
   public getUserId(): ID {
     return this.userId;
   }
+
   public getEmail(): Email {
     return this.email;
   }
@@ -31,11 +32,15 @@ export class Token {
     this.tokenPayload = this.getTokenPayload();
   }
 
-  public static generate(secretKey: string, user: User): Token {
+  public static generate(
+    secretKey: string,
+    userId: string,
+    email: string,
+  ): Token {
     const token = jwt.sign(
       {
-        userId: user.toPrimitives().id,
-        email: user.toPrimitives().email,
+        userId,
+        email,
       },
       secretKey,
       {

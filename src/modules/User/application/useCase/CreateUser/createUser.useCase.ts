@@ -35,7 +35,7 @@ export class CreateUserUseCase
     const role = new Role(request.role);
     const userValues = {
       email,
-      password: new Password(request.password),
+      password: new Password({ value: request.password }),
       name: new Name(request.name),
       role,
       description: new Description(request.description),

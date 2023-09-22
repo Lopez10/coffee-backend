@@ -28,7 +28,7 @@ export class UserMapper {
       {
         name: new Name(user.name),
         email: new Email(user.email),
-        password: new Password(user.password),
+        password: new Password({ value: user.password, hashed: true }),
         role: new Role(user.role),
         description: new Description(user.description),
         coffeeCounter: user.coffeeCounter,

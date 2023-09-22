@@ -38,7 +38,7 @@ export class DomainEvents {
   private static findMarkedAggregateByID(id: ID): AggregateRoot<any> {
     let found: AggregateRoot<any> = null;
     for (const aggregate of this.markedAggregates) {
-      if (aggregate.id.equals(id)) {
+      if (aggregate.id.matches(id)) {
         found = aggregate;
       }
     }

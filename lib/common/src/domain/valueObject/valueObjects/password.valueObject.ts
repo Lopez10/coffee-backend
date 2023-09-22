@@ -1,17 +1,40 @@
-import { DomainPrimitive, ValueObject } from '../valueObject.base';
-import { AES } from 'crypto-ts';
-import * as CryptoTS from 'crypto-ts';
+import { ValueObject } from '../valueObject.base';
+import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 
-export class Password extends ValueObject<string> {
-  constructor(value: string, key?: string) {
-    super({ value });
-    this.validate({ value });
-    if (!Password.isEncripted(value)) {
-      this.props.value = Password.encryptPassword(value, key);
+export interface PasswordProps {
+  value: string;
+  hashed?: boolean;
+}
+
+export class Password extends ValueObject<PasswordProps> {
+  constructor(props: PasswordProps) {
+    super(props);
+    if (!props.hashed) {
+      this.validate(props);
+      props.value = Password.encryptPassword(props.value);
+      props.hashed = true;
     }
   }
 
-  protected validate({ value: password }: DomainPrimitive<string>): void {
+  get value(): string {
+    return this.props.value;
+  }
+
+  get hashed(): boolean {
+    return this.props.hashed;
+  }
+
+  public comparePassword(plainTextPassword: string): boolean {
+    return this.hashed
+      ? compareSync(plainTextPassword, this.value)
+      : this.props.value === plainTextPassword;
+  }
+
+  protected validate({ value: password, hashed }: PasswordProps): void {
+    if (hashed) {
+      return;
+    }
+
     const { haveDigits, haveUppercaseAndLowercase, maxLength, minLength } =
       passwordValidations;
 
@@ -26,41 +49,13 @@ export class Password extends ValueObject<string> {
     }
   }
 
-  static isEncripted(password: string): boolean {
-    return password.startsWith('U2Fsd');
-  }
+  static encryptPassword(password: string): string {
+    const rounds = 12;
+    const salt = genSaltSync(rounds);
 
-  static encryptPassword(password: string, encryptKey?: string): string {
-    if (process.env.ENCRYPT_KEY || encryptKey) {
-      const encryptedPassword = AES.encrypt(
-        password,
-        process.env.ENCRYPT_KEY || encryptKey,
-      );
-      return encryptedPassword.toString();
-    }
-    return '';
-  }
+    const hashedText = hashSync(password, salt);
 
-  static decryptPassword(password: string, decryptKey?: string): string {
-    if (process.env.ENCRYPT_KEY || decryptKey) {
-      const encryptedPassword = AES.decrypt(
-        password,
-        decryptKey || process.env.ENCRYPT_KEY,
-      );
-      return encryptedPassword.toString(CryptoTS.enc.Utf8);
-    }
-    return '';
-  }
-
-  get value(): string {
-    return this.props.value;
-  }
-
-  public equals(password: Password): boolean {
-    return (
-      Password.decryptPassword(this.props.value) ===
-      Password.decryptPassword(password.value)
-    );
+    return hashedText;
   }
 }
 

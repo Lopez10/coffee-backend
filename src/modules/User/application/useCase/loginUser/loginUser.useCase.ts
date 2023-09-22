@@ -44,7 +44,7 @@ export class LoginUserUseCase
 
     try {
       email = new Email(request.email);
-      password = new Password(request.password);
+      password = new Password({ value: request.password });
 
       user = await this.userRepo.findOneByEmail(email);
       const userFound = !!user;
@@ -52,7 +52,7 @@ export class LoginUserUseCase
       if (!userFound) {
         return left(new LoginUserErrors.EmailDoesntExistError(email.value));
       }
-      const passwordValid = user.props.password.equals(password);
+      const passwordValid = user.props.password.matches(password);
 
       if (!passwordValid) {
         return left(new LoginUserErrors.PasswordDoesntMatchError());
@@ -60,7 +60,8 @@ export class LoginUserUseCase
 
       const accessToken: Token = Token.generate(
         process.env.JWT_SECRET_KEY,
-        user,
+        user.toPrimitives().id,
+        user.toPrimitives().email,
       );
 
       return right(Result.ok<LoginDTOResponse>({ accessToken }));

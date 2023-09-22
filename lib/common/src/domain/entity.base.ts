@@ -33,7 +33,7 @@ export abstract class Entity<T> {
       return false;
     }
 
-    return this._id.equals(object._id);
+    return this._id.matches(object._id);
   }
 
   public getPropsCopy(): Readonly<{ id: ID } & T> {
