@@ -1,7 +1,6 @@
 import { Email, ID } from '@common/domain';
 import { InvalidTokenException } from '@common/exceptions';
-import jwt, { TokenExpiredError } from 'jsonwebtoken';
-import { User } from 'src/modules/User/domain/User.entity';
+import { TokenExpiredError, decode, sign, verify } from 'jsonwebtoken';
 
 export class TokenPayload {
   private userId: ID;
@@ -37,7 +36,7 @@ export class Token {
     userId: string,
     email: string,
   ): Token {
-    const token = jwt.sign(
+    const token = sign(
       {
         userId,
         email,
@@ -61,7 +60,7 @@ export class Token {
   }
 
   private getTokenPayload(): TokenPayload {
-    const tokenDecoded = jwt.decode(this.getValue(), {
+    const tokenDecoded = decode(this.getValue(), {
       complete: true,
       json: true,
     }) as { [key: string]: any } | null;
@@ -87,7 +86,7 @@ export class Token {
 
   public isValid(): boolean {
     try {
-      jwt.verify(this.getValue(), this.secretKey, { complete: true });
+      verify(this.getValue(), this.secretKey, { complete: true });
 
       return true;
     } catch (err) {
