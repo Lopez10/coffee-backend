@@ -1,5 +1,4 @@
-import { DNI } from '@common/domain/valueObject/valueObjects/DNI.valueObject';
-import 'jest';
+import { DNI } from '@common';
 
 describe('DNI Value object test', () => {
   const DNIValid = '12345678Z';

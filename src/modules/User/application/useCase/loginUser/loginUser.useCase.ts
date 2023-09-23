@@ -38,21 +38,19 @@ export class LoginUserUseCase
     this.userRepo = userRepo;
   }
   async run(request: LoginDTO): Promise<Response> {
-    let email: Email;
-    let password: Password;
-    let user: User;
-
     try {
-      email = new Email(request.email);
-      password = new Password({ value: request.password });
+      const email = new Email(request.email);
+      const plainTextPassword = request.password;
 
-      user = await this.userRepo.findOneByEmail(email);
+      const user = await this.userRepo.findOneByEmail(email);
+
       const userFound = !!user;
 
       if (!userFound) {
         return left(new LoginUserErrors.EmailDoesntExistError(email.value));
       }
-      const passwordValid = user.props.password.matches(password);
+      const passwordValid =
+        user.props.password.comparePassword(plainTextPassword);
 
       if (!passwordValid) {
         return left(new LoginUserErrors.PasswordDoesntMatchError());

@@ -1,5 +1,6 @@
 import { LoginUserUseCase } from '../../../../modules/User/application/useCase/loginUser/LoginUser.useCase';
 import { UserRepositoryPort } from '../../../../modules/User/domain/User.repository.port';
+import { addUsersToRepository } from '../../repository/MockUserData';
 import { MockUserRepository } from '../../repository/MockUserRepository';
 
 describe('Login User', () => {
@@ -11,17 +12,16 @@ describe('Login User', () => {
     THEN I get the user with that email and password
   `, async () => {
     // GIVEN
-    // addUsersToRepository(userRepository);
+    addUsersToRepository(userRepository);
 
     // WHEN
-    // Fix JWT SIGN ERROR IN TESTS (is undefined)
-    // const user = await action.run({
-    //   email: 'user1@gmail.com',æ
-    //   password: '123456Prueba',
-    // });
+    const user = await action.run({
+      email: 'user1@gmail.com',
+      password: '123456Prueba',
+    });
 
     // THEN
-    // expect(user.isRight()).toEqual(true);
+    expect(user.isRight()).toEqual(true);
     // if (user.isRight()) {
     //   expect(user.value.getValue()).toEqual('');
     expect(true).toEqual(true);

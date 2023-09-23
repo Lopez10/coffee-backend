@@ -15,9 +15,7 @@ describe('Password value object test', () => {
     expect(newPassword.hashed).toBeTruthy();
 
     // THEN
-    const passwordIsCorrect = newPassword.comparePassword('1234PasswordValid');
-    expect(passwordIsCorrect).toBeTruthy();
-    const passwordIsIncorrect = newPassword.comparePassword('1234Password');
-    expect(passwordIsIncorrect).toBeFalsy();
+    expect(newPassword.comparePassword('1234PasswordValid')).toBeTruthy();
+    expect(newPassword.comparePassword('1234Password')).toBeFalsy();
   });
 });
