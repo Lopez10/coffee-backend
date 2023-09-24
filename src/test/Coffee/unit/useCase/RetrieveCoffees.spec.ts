@@ -1,8 +1,7 @@
-import { ID, Name, Roast } from '@common';
 import { CoffeeRepositoryPort } from '../../../../modules/Coffee/domain/Coffee.repository.port';
 import { MockCoffeeRepository } from '../../repository/MockCoffeeRepository';
 import { RetrieveCoffeesUseCase } from '../../../../modules/Coffee/application/useCase/retrieveCoffees/RetrieveCoffees.useCase';
-import { Coffee } from '../../../..//modules/Coffee/domain/Coffee.entity';
+import { addCoffeeToRepository } from '../../repository/MockCoffeeData';
 
 const coffeeRepository: CoffeeRepositoryPort = new MockCoffeeRepository();
 addCoffeeToRepository(coffeeRepository);
@@ -62,38 +61,3 @@ describe('Retrieve Coffees', () => {
     }
   });
 });
-
-function addCoffeeToRepository(coffeeRepository: CoffeeRepositoryPort) {
-  coffeeRepository.insertSome([
-    Coffee.create(
-      {
-        name: new Name('Café 1'),
-        origin: 'Peru',
-        height: 1000,
-        roast: new Roast('LIGHT'),
-        userId: new ID('User1'),
-      },
-      new ID('Coffee1'),
-    ),
-    Coffee.create(
-      {
-        name: new Name('Café 2'),
-        origin: 'El Salvador',
-        height: 1000,
-        roast: new Roast('DARK'),
-        userId: new ID('User1'),
-      },
-      new ID('Coffee2'),
-    ),
-    Coffee.create(
-      {
-        name: new Name('Café 3'),
-        origin: 'Peru',
-        height: 2500,
-        roast: new Roast('MEDIUM'),
-        userId: new ID('User1'),
-      },
-      new ID('Coffee3'),
-    ),
-  ]);
-}
