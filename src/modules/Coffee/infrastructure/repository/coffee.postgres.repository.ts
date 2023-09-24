@@ -85,4 +85,21 @@ export class CoffeePostgresRepository implements CoffeeRepositoryPort {
       data: coffeesDomain,
     });
   }
+
+  async update(entity: Coffee): Promise<Coffee> {
+    const id = entity.getPropsCopy().id;
+    const coffeeFound = this.findOneById(id);
+
+    if (!coffeeFound) return;
+
+    const coffee: CoffeeModel = CoffeeMapper.toDTO(entity);
+
+    const response = await this.prisma.coffee.update({
+      where: {
+        id: id.value,
+      },
+      data: coffee,
+    });
+    return CoffeeMapper.toDomain(response);
+  }
 }

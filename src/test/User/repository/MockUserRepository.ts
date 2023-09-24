@@ -75,7 +75,12 @@ export class MockUserRepository implements UserRepositoryPort {
 
     return paginatedUsers;
   }
+
   async transaction<T>(handler: () => Promise<T>): Promise<T> {
     return handler();
+  }
+
+  update(entity: User): Promise<User> {
+    throw new Error('Method not implemented.');
   }
 }

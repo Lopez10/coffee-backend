@@ -21,7 +21,7 @@ export class RetrieveCoffeeByIdUseCase
 {
   constructor(private readonly coffeeRepository: CoffeeRepositoryPort) {}
 
-  async run(request?: RetrieveCoffeeByIdRequestDTO): Promise<Response> {
+  async run(request: RetrieveCoffeeByIdRequestDTO): Promise<Response> {
     try {
       const coffeeID = new ID(request.id);
       const coffee = await this.coffeeRepository.findOneById(coffeeID);

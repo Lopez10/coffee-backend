@@ -72,6 +72,10 @@ export class UserPostgresRepository implements UserRepositoryPort {
     return this.prisma.$transaction(handler);
   }
 
+  update(entity: User): Promise<User> {
+    throw new Error('Method not implemented.');
+  }
+
   async findOneByEmail(email: Email): Promise<User | null> {
     const user: UserModel = await this.prisma.user.findUnique({
       where: { email: email.value },

@@ -83,6 +83,18 @@ export class MockCoffeeRepository implements CoffeeRepositoryPort {
     return paginatedCoffees;
   }
 
+  async update(entity: Coffee): Promise<Coffee> {
+    const coffeeData = CoffeeMapper.toDTO(entity);
+
+    const coffeeIndex = this.coffees.findIndex(
+      (coffee) => coffee.id === coffeeData.id,
+    );
+
+    this.coffees[coffeeIndex] = coffeeData;
+
+    return CoffeeMapper.toDomain(coffeeData);
+  }
+
   async transaction<T>(handler: () => Promise<T>): Promise<T> {
     return handler();
   }

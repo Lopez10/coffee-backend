@@ -33,5 +33,6 @@ export interface RepositoryPort<Entity> {
     criteria: any,
     params: PaginatedQueryParams,
   ): Promise<Paginated<Entity>>;
+  update(entity: Entity): Promise<Entity>;
   transaction<T>(handler: () => Promise<T>): Promise<T>;
 }
