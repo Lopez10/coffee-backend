@@ -2,7 +2,6 @@ import {
   AppError,
   Either,
   Email,
-  Password,
   Result,
   Token,
   UseCaseBase,
@@ -11,7 +10,6 @@ import {
 } from '@common';
 import { LoginUserErrors } from './LoginUser.error';
 import { UserRepositoryPort } from '../../../domain/User.repository.port';
-import { User } from '../../../domain/User.entity';
 
 export interface LoginDTO {
   email: string;
