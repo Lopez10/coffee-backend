@@ -2,16 +2,24 @@ import { AppError, Either, Result, UseCaseBase, left, right } from '@common';
 import { CoffeeDTO, CoffeeMapper } from '../../../Coffee.mapper';
 import { Coffee } from '../../../domain/Coffee.entity';
 import { CoffeeRepositoryPort } from '../../../domain/Coffee.repository.port';
+import { UpdateCoffeeErrors } from './UpdateCoffee.error';
 
 type Response = Either<AppError.UnexpectedError, Result<Coffee>>;
 
+export interface UpdateCoffeeDTO {
+  coffeeDTO: CoffeeDTO;
+  userId: string;
+}
 export class UpdateCoffeeUseCase
-  implements UseCaseBase<CoffeeDTO, Promise<Response>>
+  implements UseCaseBase<UpdateCoffeeDTO, Promise<Response>>
 {
   constructor(private readonly coffeeRepository: CoffeeRepositoryPort) {}
-  async run(request: CoffeeDTO): Promise<Response> {
+  async run({ coffeeDTO, userId }: UpdateCoffeeDTO): Promise<Response> {
     try {
-      const coffee = CoffeeMapper.toDomain(request);
+      if (userId !== coffeeDTO.userId) {
+        return left(new UpdateCoffeeErrors.NotAllowedToUpdate());
+      }
+      const coffee = CoffeeMapper.toDomain(coffeeDTO);
 
       const coffeeUpdated = await this.coffeeRepository.update(coffee);
       return right(Result.ok<Coffee>(coffeeUpdated));

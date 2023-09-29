@@ -1,4 +1,4 @@
-import { UpdateCoffeeUseCase } from '../../../../modules/Coffee/application/useCase/updateCoffeeById/UpdateCoffee.useCase';
+import { UpdateCoffeeUseCase } from '../../../../modules/Coffee/application/useCase/updateCoffee/UpdateCoffee.useCase';
 import { CoffeeRepositoryPort } from '../../../../modules/Coffee/domain/Coffee.repository.port';
 import { addCoffeeToRepository } from '../../repository/MockCoffeeData';
 import { MockCoffeeRepository } from '../../repository/MockCoffeeRepository';
